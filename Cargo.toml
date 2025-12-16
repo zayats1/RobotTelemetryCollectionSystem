@@ -1,3 +1,19 @@
 [workspace]
-members = ["telemetry-collector"]
+members = ["frontend"] # "server","robo-data"
 resolver = "3"
+
+# The profile to use for the lib target when compiling for release
+#
+# Defines a size-optimized profile for the WASM bundle in release mode
+[profile.wasm-release]
+inherits = "release"
+opt-level = 'z'
+lto = true
+codegen-units = 1
+panic = "abort"
+
+#[[workspace.metadata.leptos]]
+## project name
+#name = "RobotTelemetryCollectionSystem"
+## bin-package = "server"
+#lib-package = "frontend"
