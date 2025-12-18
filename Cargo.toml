@@ -1,5 +1,5 @@
 [workspace]
-members = ["frontend"] # "server","robo-data"
+members = ["frontend", "robot_data"] # "server"
 resolver = "3"
 
 # The profile to use for the lib target when compiling for release
