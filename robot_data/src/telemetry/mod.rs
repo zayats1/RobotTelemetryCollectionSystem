@@ -1,2 +1,0 @@
-mod BasicRobotInfo;
-mod RobotInfo;
