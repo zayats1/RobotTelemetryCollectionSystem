@@ -18,7 +18,7 @@ pub struct BatteryInfo {
 #[derive(Default,Debug,Clone,Deserialize,Serialize,PartialEq)]
 pub struct BasicInfo {
     pub id: u64,
-    pub battery_info: Option<BatteryInfo>,
+    // pub battery_info: Option<BatteryInfo>,
     pub robot_type: RobotType,
 }
 #[derive(Default,Debug,Clone,Deserialize,Serialize,PartialEq)]
