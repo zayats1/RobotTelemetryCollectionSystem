@@ -18,7 +18,7 @@ pub enum RobotInfo {
 
 impl RobotInfo {
     
-    fn parse(robot_type: &str,robot_data: &str) -> Result<Self, RobotInfoParsingError> {
+  pub   fn parse(robot_type: &str,robot_data: &str) -> Result<Self, RobotInfoParsingError> {
         let robot_type = serde_json::from_str::<Value>(robot_type).map_err(|_| RobotInfoParsingError)?;
         let info_type =
             IncomingInfoType::try_from(robot_type["type"].as_str().ok_or(RobotInfoParsingError)?)?;
