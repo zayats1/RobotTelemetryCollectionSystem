@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/frontend/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/robot_data/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/server/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/fake_robot/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/frontend/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
