@@ -1,0 +1,24 @@
+meta {
+  name: receive telemetry
+  type: http
+  seq: 1
+}
+
+post {
+  url: 
+  body: json
+  auth: inherit
+}
+
+body:json {
+   {
+      "type": "BasicInfo",
+      "id": 6969424242,
+      "robot_type": "Mobile"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
