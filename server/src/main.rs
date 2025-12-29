@@ -1,5 +1,5 @@
 mod receiver;
-mod database_connector;
+mod database;
 
 use axum::{
     routing::get,
