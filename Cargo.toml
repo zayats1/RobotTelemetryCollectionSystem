@@ -9,7 +9,12 @@ resolver = "3"
 inherits = "release"
 opt-level = 'z'
 lto = true
-codegen-units = 1
+codegen-units = 8
+panic = "abort"
+
+[profile.dev]
+lto = true
+codegen-units = 8
 panic = "abort"
 
 

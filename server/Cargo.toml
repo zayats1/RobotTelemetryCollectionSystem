@@ -10,4 +10,4 @@ tokio = { version = "1.0", features = ["full"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 robot_data = {path = "../robot_data"}
-duckdb = { version = "1.4.3", features = ["bundled","modern-full"] }
+duckdb = { version = "1.4.3", features = ["bundled"] }
