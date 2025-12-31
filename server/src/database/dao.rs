@@ -1,10 +1,11 @@
-use duckdb::{params, Connection, Error};
+
+use libsql::{de,params, Connection};
 use robot_data::robot_info::BasicInfo;
 use robot_data::RobotInfo;
 
-pub trait DAO {
-    fn insert_to_db(&self, conn: &Connection) -> duckdb::Result<usize>;
-    fn get_by_id(id: u64, conn: &Connection) -> Result<Vec<Self>, duckdb::Error>
+pub    trait DAO {
+   async fn insert_to_db(&self, conn: &Connection) ->  libsql::Result<u64>;
+   async  fn get_by_id(id: u64, conn: &Connection) -> Result<Vec<Self>, libsql::Error>
     where
         Self: Sized;
 }
@@ -14,28 +15,27 @@ pub trait DAO {
 
 
 impl DAO for BasicInfo {
-    fn insert_to_db(&self, conn: &Connection) -> duckdb::Result<usize> {
+   async  fn insert_to_db(&self, conn: &Connection) -> libsql::Result<u64> {
         conn.execute(
-            "INSERT INTO  main.BasicInfo(id,robot_type) VALUES (?, ?)",
+            "INSERT INTO  BasicInfo(id,robot_type) VALUES (?, ?)",
             params![self.id, self.robot_type.to_string()],
-        )
+        ).await
     }
 
-    fn get_by_id(id: u64, conn: &Connection) -> Result<Vec<Self>, duckdb::Error>
+    async fn get_by_id(id: u64, conn: &Connection) -> Result<Vec<Self>, libsql::Error>
     where
         Self: Sized,
     {
-        let mut stmt = conn.prepare("SELECT id, robot_type FROM  main.BasicInfo WHERE id = (?)")?;
-        stmt.query_map(params![id], |row| {
-            Ok(BasicInfo {
-                id,
-                robot_type: row
-                    .get::<usize, String>(1)?
-                    .as_str()
-                    .try_into()
-                    .map_err(|e: &str| duckdb::Error::InvalidColumnName(e.to_string()))?,
-            })
-        })?
-        .collect()
+        let stmt = conn.prepare("SELECT id, robot_type FROM  BasicInfo WHERE id = (?)").await?;
+        let mut rows = stmt
+            .query([id])
+            .await?;
+         let mut data:Vec<BasicInfo> = vec![];
+
+         while let Some(row )  = rows.next().await?{
+              data.push(de::from_row::<BasicInfo>(&row).map_err(|e| libsql::Error::InvalidParserState(e.to_string()))?);
+         }
+         Ok(data)
+
     }
 }
