@@ -2,7 +2,7 @@ pub use crate::geodata::Geodata;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
-use std::str::FromStr;
+
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub enum RobotType {
     RoboHand,
@@ -48,9 +48,8 @@ pub struct BasicInfo {
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct MovementInfo {
     pub id: u64,
-    pub speed: f32,
-    pub acceleration: f32,
-    pub orientation: f32,
+    pub speed: Vec3,
+    pub acceleration: Vec3,
     pub timestamp: DateTime<Utc>,
 }
 
@@ -61,7 +60,7 @@ pub struct RobotLocation {
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, PartialOrd)]
-pub struct Point {
+pub struct Vec3 {
     pub x: f32,
     pub y: f32,
     pub z: f32,
