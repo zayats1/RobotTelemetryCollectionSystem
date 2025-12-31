@@ -1,8 +1,8 @@
 use axum::Json;
 use libsql::Builder;
-
 use robot_data::RobotInfo;
 use server::database::dao::DAO;
+use tracing::{debug, info};
 #[derive(Debug, Default, Clone)]
 pub struct AppState {
     received: Vec<Json<RobotInfo>>,
@@ -11,18 +11,25 @@ pub struct AppState {
 pub async fn receive_telemetry(data: Json<RobotInfo>) -> Json<String> {
     let _ = format!("Received data: {:?}", data.clone());
     let res = async {
-        let db = Builder::new_local("server/RobotTelemetry.db").build().await?;
+        let db = Builder::new_local("server/RobotTelemetry.db")
+            .build()
+            .await?;
         let conn = db.connect()?;
         match data.0 {
-            RobotInfo::BasicInfo(info) => info.insert_to_db(&conn).await,
+            RobotInfo::BasicInfo(info) => {
+                debug!("Received BasicInfo: {:?}", info);
+                info.insert_to_db(&conn).await
+            }
+
             RobotInfo::Location(_) => {
                 todo!()
             }
             RobotInfo::Battery(_) => {
                 todo!()
             }
-            RobotInfo::Movement(_) => {
-                todo!()
+            RobotInfo::Movement(info) => {
+                debug!("Received movement: {:?}", info);
+                info.insert_to_db(&conn).await
             }
         }
     };
