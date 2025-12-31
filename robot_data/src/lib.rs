@@ -34,7 +34,7 @@ mod tests {
         let res = serde_json::from_str::<RobotInfo>(telemetry).ok();
         assert_eq!(
             Some(RobotInfo::BasicInfo(BasicInfo {
-                id: 6969424242,
+                id: "6969424242".to_string(),
 
                 robot_type: RobotType::Mobile
             })),

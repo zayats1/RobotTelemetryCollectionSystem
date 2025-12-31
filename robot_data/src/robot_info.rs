@@ -34,28 +34,28 @@ impl TryFrom<&str> for RobotType {
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct BatteryInfo {
-    pub id: u64,
+    pub id: String,
     pub capacity: f32,
     pub health: f32,
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct BasicInfo {
-    pub id: u64,
+    pub id:  String,
     // pub battery_info: Option<BatteryInfo>,
     pub robot_type: RobotType,
 }
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct MovementInfo {
-    pub id: u64,
+    pub id:  String,
     pub speed: Vec3,
-    pub acceleration: Vec3,
+    pub acc: Vec3,
     pub timestamp: DateTime<Utc>,
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct RobotLocation {
-    pub id: u64,
+    pub id:  String,
     geodata: Geodata,
 }
 
