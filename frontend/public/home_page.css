@@ -1,0 +1,104 @@
+body {
+    background: linear-gradient(to bottom, rgba(50, 46, 54, 0.21), #2a1f38) fixed;
+    font-family: 'Ubuntu', 'Caladea', 'Lucida sans' ,'sans-serif';
+}
+
+.panel {
+    background-color: hsla(33, 78%, 91%, 0.555);
+    border-radius: 20pt;
+    margin-bottom: 5pt;
+}
+
+.caption {
+    text-align: center;
+}
+
+#gallery {
+    background: none;
+    display: flex;
+    flex-wrap: wrap;
+    scroll-behavior: smooth;
+    justify-content: flex-start;
+    width: 100%
+}
+
+
+
+
+@media (min-width: 440px) {
+    .image {
+        height: 225pt;
+        width: 325pt;
+        padding: 5px;
+        border-radius: 10pt;
+    }
+
+    article {
+        background-color: aliceblue;
+        display: block;
+        text-align: justify;
+        border-radius: 20pt;
+        width: 450px;
+        height: fit-content;
+        padding: 8pt;
+        margin: 15pt;
+
+    }
+
+}
+
+
+@media (min-width: 1080px) {
+    .image {
+        height: 300pt;
+        width: 400pt;
+        padding: 5px;
+        border-radius: 10pt;
+    }
+
+    article {
+        background-color: aliceblue;
+        display: block;
+        text-align: justify;
+        border-radius: 20pt;
+        width: 540px;
+        height: fit-content;
+        padding: 8pt;
+        margin: 15pt;
+        flex: 0 16%;
+    }
+
+}
+
+@media (min-width: 1750px) {
+    .image {
+        height: 300pt;
+        width: 400pt;
+        padding: 5px;
+        border-radius: 10pt;
+    }
+
+    article {
+        background-color: aliceblue;
+        display: block;
+        text-align: justify;
+        border-radius: 20pt;
+        width: 550px;
+        height: fit-content;
+        padding: 8pt;
+        margin: 15pt;
+        flex: 0 26%;
+    }
+
+}
+
+
+.dock {
+    text-align: center;
+    display: block;
+    padding: 2pt;
+    font-size: large;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}

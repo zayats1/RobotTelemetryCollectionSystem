@@ -1,16 +1,26 @@
+@import "../public/home_page.css";
 body {
 	font-family: sans-serif;
 	text-align: center;
 }
 nav{
+	display: flex;
+	justify-content: flex-start;
+	background-color: rgba(45, 121, 132, 0.47);
 	border: 1px;
-	align-content: baseline;
 	font-family: sans-serif;
-	text-align: center;
+
+}
+nav p{
+	text-align: left;
+	align-self: center;
+	padding-right: 1em;
+	margin-right: 1em;
 }
 
 
 nav a{
+	align-self: center;
 	padding-right: 1em;
 	margin-right: 1em;
 }
