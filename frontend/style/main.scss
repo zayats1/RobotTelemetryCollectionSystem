@@ -2,24 +2,34 @@
 body {
 	font-family: sans-serif;
 	text-align: center;
+	background: linear-gradient(to bottom, rgb(45, 121, 132), #1D393C) fixed;
+
 }
 nav{
 	display: flex;
 	justify-content: flex-start;
-	background-color: rgba(45, 121, 132, 0.47);
+	background-color: rgba(50, 46, 54, 0.66);
 	border: 1px;
 	font-family: sans-serif;
-
+	border-radius: 1em;
 }
+
+
 nav p{
+	color: aliceblue;
+	mix-blend-mode: screen;
 	text-align: left;
 	align-self: center;
+	margin-left: 2em;
 	padding-right: 1em;
 	margin-right: 1em;
+
 }
 
 
 nav a{
+	color: aliceblue;
+	mix-blend-mode: screen;
 	align-self: center;
 	padding-right: 1em;
 	margin-right: 1em;

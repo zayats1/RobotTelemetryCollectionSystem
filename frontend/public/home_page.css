@@ -1,13 +1,9 @@
+/*theme : https://www.nordtheme.com/*/
 body {
-    background: linear-gradient(to bottom, rgba(50, 46, 54, 0.21), #2a1f38) fixed;
     font-family: 'Ubuntu', 'Caladea', 'Lucida sans' ,'sans-serif';
 }
 
-.panel {
-    background-color: hsla(33, 78%, 91%, 0.555);
-    border-radius: 20pt;
-    margin-bottom: 5pt;
-}
+
 
 .caption {
     text-align: center;
@@ -22,7 +18,13 @@ body {
     width: 100%
 }
 
-
+article {
+    background-color: rgb(46, 52, 64);
+    display: block;
+    text-align: justify;
+    height: fit-content;
+   color: aliceblue;
+}
 
 
 @media (min-width: 440px) {
@@ -34,9 +36,6 @@ body {
     }
 
     article {
-        background-color: aliceblue;
-        display: block;
-        text-align: justify;
         border-radius: 20pt;
         width: 450px;
         height: fit-content;
@@ -57,9 +56,6 @@ body {
     }
 
     article {
-        background-color: aliceblue;
-        display: block;
-        text-align: justify;
         border-radius: 20pt;
         width: 540px;
         height: fit-content;
@@ -79,12 +75,8 @@ body {
     }
 
     article {
-        background-color: aliceblue;
-        display: block;
-        text-align: justify;
         border-radius: 20pt;
         width: 550px;
-        height: fit-content;
         padding: 8pt;
         margin: 15pt;
         flex: 0 26%;
