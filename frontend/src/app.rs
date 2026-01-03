@@ -6,7 +6,7 @@ use leptos_router::{
     StaticSegment,
 };
 use crate::home_page::HomePage;
-use crate::robot_map::RobotMap;
+
 
 pub fn shell(options: LeptosOptions) -> impl IntoView {
     view! {
@@ -19,6 +19,7 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
                 <AutoReload options=options.clone() />
                 <HydrationScripts options/>
                 <MetaTags/>
+
             </head>
             <body>
                 <App/>
@@ -43,7 +44,6 @@ pub fn App() -> impl IntoView {
            <p>"Welcome to Leptos!"</p>
           <a href="/Visualizer/">Visualizer</a>
           <a href="/HomePage/">HomePage</a>
-          <a href="/RobotMap/">RobotMap</a>
         </nav>
         // content for this welcome page
         <Router>
@@ -52,7 +52,6 @@ pub fn App() -> impl IntoView {
                     <Route path=StaticSegment("") view=HomePage/>
                     <Route path=StaticSegment("HomePage") view=HomePage/>
                     <Route path=StaticSegment("Visualizer") view=Visualizer/>
-                    <Route path=StaticSegment("RobotMap") view=RobotMap/>
                 </Routes>
             </main>
         </Router>

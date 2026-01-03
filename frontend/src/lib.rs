@@ -1,6 +1,6 @@
 pub mod app;
 pub mod visualizer;
-mod robot_map;
+
 pub mod home_page;
 
 #[cfg(feature = "hydrate")]

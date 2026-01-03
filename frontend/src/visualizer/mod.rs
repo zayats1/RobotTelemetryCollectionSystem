@@ -1,31 +1,47 @@
-use leptos::prelude::{OnAttribute, RenderHtml, Write};
-use leptos::prelude::{ElementChild, RwSignal};
-use leptos::{component, view, IntoView};
+
+use leptos::prelude::{Effect, ElementChild, Get, GetUntracked, OnAttribute, RwSignal, Update};
+use leptos::{component, island, view, IntoView};
+use charming::{component::{Axis, Title}, element::AxisType, series::Line, Chart, EchartsError, HtmlRenderer};
 use leptos::html::InnerHtmlAttribute;
-use plotly::{Plot, Scatter};
+use leptos::logging::{error, log};
 
-#[component]
+use leptos::prelude::RenderHtml;
+#[island]
 pub fn Visualizer() -> impl IntoView{
-    let count = RwSignal::new(0);
-    let on_click = move |_| *count.write() += 1;
 
-    let id = "plot-div";
-    let mut plot = Plot::new();
-    let trace = Scatter::new(vec![0, 1, 2], vec![2, 1, 0]);
-    plot.add_trace(trace);
+    let data = RwSignal::new(vec![150, 230, 224, 218, 135, 147, 260]);
 
-    let layout = plotly::Layout::new().title("Displaying a Chart in Leptos");
-    plot.set_layout(layout);
 
-   let chart = plot.to_inline_html(Some(id));
-    plot.use_cdn_js();
-    
+        let local = data.get();
+
+        let chart = Chart::new()
+            .title(Title::new().text("Demo: Leptos + Charming"))
+            .x_axis(
+                Axis::new()
+                    .type_(AxisType::Category)
+                    .data(vec!["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]),
+            )
+            .y_axis(Axis::new().type_(AxisType::Value))
+            .series(Line::new().data(local));
+
+        let renderer = HtmlRenderer::new("chart",600, 400);
+         let res =  renderer.render( &chart);
+        let chart = RwSignal::new(match res {
+            Ok(chart) => { chart }
+            Err(e) => {error!("{}",e.to_string());
+            e.to_string()}
+        });
+
+
+
     view! {
+          <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+        <div>
         <h1>"Welcome to visualizer!"</h1>
-        <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
-
-        <button on:click=on_click>"Click Me: " {count}</button>
-         <div inner_html = chart/>
-
+            <div inner_html=  chart.get_untracked()> </div>
+        </div>
     }
+
+
 }
