@@ -21,6 +21,7 @@ pub fn Visualizer() -> impl IntoView {
 
     let chart_ref: NodeRef<html::Div> = NodeRef::new();
 
+
     let show = move || {
         if let Some(div) = chart_ref.get() {
             div.set_inner_html(""); // optional cleanup
@@ -41,6 +42,7 @@ pub fn Visualizer() -> impl IntoView {
                 let renderer = WasmRenderer::new(600, 400);
                 renderer.render("chart", &chart).unwrap();
             });
+
         }
     };
 
@@ -75,3 +77,4 @@ pub fn Visualizer() -> impl IntoView {
         </div>
     }
 }
+
