@@ -9,22 +9,21 @@ crate-type = ["cdylib", "rlib"]
 
 
 [dependencies]
-leptos = { version = "0.8.15",features = ["tracing"]  }
-leptos_router = { version = "0.8.11", features = ["tracing"]}
+leptos = { version = "0.8.15" ,features = ["nightly"] }
+leptos_router = { version = "0.8.11",features = ["nightly"]}
 axum = { version = "0.8.0", optional = true }
 console_error_panic_hook = { version = "0.1", optional = true }
-leptos_axum = { version = "0.8.7", features = ["tracing"],optional = true }
-leptos_meta = { version = "0.8.5" ,features = ["tracing"]}
-tokio = { version = "1", features = ["rt-multi-thread"], optional = true }
+leptos_axum = { version = "0.8.7",optional = true }
+leptos_meta = { version = "0.8.5"  }
+tokio = { version = "1", features = ["rt-multi-thread","net"], optional = true }
 wasm-bindgen = { version = "=0.2.106", optional = true }
-charming = { version = "0.6.0", features = ["js-sys","serde-wasm-bindgen"] }
+charming = { version = "0.6.0", features = ["ssr"] }
 leptos-use = "0.17"
 
 
 
 [features]
 hydrate = [
-    "leptos/csr",
     "leptos/hydrate",
     "dep:console_error_panic_hook",
     "dep:wasm-bindgen",
@@ -64,12 +63,6 @@ site-addr = "127.0.0.1:3000"
 
 # The port to use for automatic reload monitoring
 reload-port = 3001
-
-# [Optional] Command to use when running end2end tests. It will run in the end2end dir.
-#   [Windows] for non-WSL use "npx.cmd playwright test"
-#   This binary name can be checked in Powershell with Get-Command npx
-end2end-cmd = "npx playwright test"
-end2end-dir = "end2end"
 
 #  The browserlist query used for optimizing the CSS.
 browserquery = "defaults"

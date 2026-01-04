@@ -1,5 +1,4 @@
 pub mod app;
-pub mod visualizer;
 
 pub mod home_page;
 

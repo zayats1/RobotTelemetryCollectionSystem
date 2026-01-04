@@ -1,26 +1,21 @@
 [workspace]
-members = ["fake_robot","frontend", "robot_data", "server"] # "server"
+members = [
+    "client_frontend",
+    "fake_robot",
+    "frontend",
+    "robot_data",
+    "server",
+]
 resolver = "3"
-
-# The profile to use for the lib target when compiling for release
-#
-# Defines a size-optimized profile for the WASM bundle in release mode
-[profile.wasm-release]
-inherits = "release"
-opt-level = 'z'
-lto = true
-codegen-units = 8
-panic = "abort"
 
 [profile.dev]
 lto = true
 codegen-units = 8
 panic = "abort"
 
-
-
-#[[workspace.metadata.leptos]]
-## project name
-#name = "RobotTelemetryCollectionSystem"
-## bin-package = "server"
-#lib-package = "frontend"
+[profile.wasm-release]
+opt-level = "z"
+lto = true
+codegen-units = 8
+panic = "abort"
+inherits = "release"

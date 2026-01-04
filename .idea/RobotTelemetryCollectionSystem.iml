@@ -7,10 +7,14 @@
       <sourceFolder url="file://$MODULE_DIR$/robot_data/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/server/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/fake_robot/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/leptos_test/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/client_frontend/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/frontend/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="echarts" level="application" />
+    <orderEntry type="library" name="echarts-gl" level="application" />
   </component>
 </module>
