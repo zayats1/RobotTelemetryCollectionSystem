@@ -1,4 +1,3 @@
-pub use crate::geodata::Geodata;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
@@ -53,10 +52,12 @@ pub struct MovementInfo {
     pub timestamp: DateTime<Utc>,
 }
 
+pub type GPS = String; // TODO use actual GPS
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
-pub struct RobotLocation {
+pub struct Geodata {
     pub id:  String,
-    geodata: Geodata,
+    pub coordinates: GPS,
+    pub timestamp: DateTime<Utc>
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, PartialOrd)]
