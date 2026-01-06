@@ -7,7 +7,7 @@ use axum::{
 };
 use axum::routing::post;
 use crate::receiver::receive_telemetry;
-use tracing::{info, Level};
+use tracing::{info};
 use tracing_subscriber;
 #[tokio::main]
 async fn main()  -> Result<(), std::io::Error> {
