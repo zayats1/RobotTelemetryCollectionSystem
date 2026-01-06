@@ -48,8 +48,8 @@ pub struct BasicInfo {
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct MovementInfo {
     pub id:  String,
-    pub speed: Vec3,
-    pub acc: Vec3,
+    pub speed: Vec3,  // m/s
+    pub acc: Vec3,   // m/s^2
     pub timestamp: DateTime<Utc>,
 }
 
