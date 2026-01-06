@@ -5,7 +5,7 @@ use crate::robot_info::{BasicInfo, BatteryInfo, MovementInfo, Geodata};
 pub mod robot_info;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize,EnumDiscriminants)]
-#[strum_discriminants(name(PubDiscriminants))]
+#[strum_discriminants(name(RobotInfoType))]
 #[strum_discriminants(derive(EnumString,IntoStaticStr))]
 #[serde(tag = "type")]
 pub enum RobotInfo {
