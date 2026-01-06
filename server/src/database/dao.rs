@@ -195,7 +195,7 @@ impl DAO for BatteryInfo{
         Self: Sized
     {
         let stmt = conn
-            .prepare("SELECT id, capacity,health,timestamp FROM  BatteryInfo WHERE id = (?)")
+            .prepare("SELECT id, capacity,total_capacity, health,timestamp FROM  BatteryInfo WHERE id = (?)")
             .await?;
         let mut rows = stmt.query([id]).await?;
         let mut data: Vec<BatteryInfo> = vec![];
