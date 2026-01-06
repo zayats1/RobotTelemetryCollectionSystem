@@ -21,11 +21,13 @@ pub async fn receive_telemetry(data: Json<RobotInfo>) -> Json<String> {
                 info.insert_to_db(&conn).await
             }
 
-            RobotInfo::Geodata(_) => {
-                todo!()
+            RobotInfo::Geodata(info) => {
+                debug!("Received Geodata: {:?}", info);
+                info.insert_to_db(&conn).await
             }
-            RobotInfo::Battery(_) => {
-                todo!()
+            RobotInfo::Battery(info) => {
+                debug!("Received BatteryInfo: {:?}", info);
+                info.insert_to_db(&conn).await
             }
             RobotInfo::Movement(info) => {
                 debug!("Received movement: {:?}", info);
