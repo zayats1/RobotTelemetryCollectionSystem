@@ -3,10 +3,6 @@ use libsql::Builder;
 use robot_data::RobotInfo;
 use server::database::dao::DAO;
 use tracing::{debug, info};
-#[derive(Debug, Default, Clone)]
-pub struct AppState {
-    received: Vec<Json<RobotInfo>>,
-}
 
 pub async fn receive_telemetry(data: Json<RobotInfo>) -> Json<String> {
     let _ = format!("Received data: {:?}", data.clone());
