@@ -35,6 +35,7 @@ impl TryFrom<&str> for RobotType {
 pub struct BatteryInfo {
     pub id: String,
     pub capacity: f32,
+    pub total_capacity: f32,
     pub health: f32,
     pub timestamp: DateTime<Utc>,
 }

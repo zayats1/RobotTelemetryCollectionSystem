@@ -154,10 +154,11 @@ impl DAO for BatteryInfo{
         conn.execute(
             "INSERT INTO \
              BatteryInfo \
-            VALUES (?,?,?,?)",
+            VALUES (?,?,?,?,?)",
             params![
                 self.id.clone(),
                 self.capacity,
+                self.total_capacity,
                 self.health,
                 self.timestamp.to_string()
             ],
@@ -179,8 +180,9 @@ impl DAO for BatteryInfo{
             let info = BatteryInfo {
                 id: row.get(0)?,
                 capacity: sql_val_to_f32(&row,1)?,
-                health: sql_val_to_f32(&row,2)?,
-                timestamp:sql_val_to_time(&row, 3)?,
+                total_capacity: sql_val_to_f32(&row,2)?,
+                health: sql_val_to_f32(&row,3)?,
+                timestamp:sql_val_to_time(&row, 4)?,
             };
 
             data.push(info);
