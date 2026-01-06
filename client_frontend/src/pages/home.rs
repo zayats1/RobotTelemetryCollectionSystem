@@ -15,7 +15,7 @@ pub fn HomePage() -> impl IntoView {
 
         <section id="gallery">
         <article>
-            <img class="image" src="pictures/AndromedaGalaxy.jpg" alt="se la vi"/>
+            <img class="image" src="/pictures/DM_300_infobox.webp" alt="se la vi"/>
             <p>
                 <b>"Галактика Андромеди(інша назва: Туманність Андромеди) й галактика M110"</b>
                "ISO 3200
@@ -28,7 +28,7 @@ pub fn HomePage() -> impl IntoView {
             </p>
         </article>
         <article>
-            <img class="image" src="pictures/METEOR.jpg" alt="se la vi" />
+            <img class="image" src="/pictures/DM_300_infobox.webp" alt="se la vi" />
             <p>
                 <b>
                 "Великий болід у сузір'ях Кассіопея та Цефей"
@@ -41,7 +41,7 @@ pub fn HomePage() -> impl IntoView {
             </p>
         </article>
         <article>
-            <img class="image" src="pictures/neowise.jpg" alt="se la vi"/>
+            <img class="image" src="/pictures/DM_300_infobox.webp" alt="se la vi"/>
             <p> <b>"С/2020 f3 NEOWISE у сузірї Рись 15.07.2020"</b>
                 "Витримка 10 секунд
                 ISO 3200
@@ -52,13 +52,13 @@ pub fn HomePage() -> impl IntoView {
             </p>
         </article>
         <article>
-            <img class="image" src="pictures/RiceOfMoon.jpg" alt="se la vi"/>
+            <img class="image" src="/pictures/DM_300_infobox.webp" alt="se la vi"/>
             <p> <b>"Місяць над селом"</b>
                 "sigma 18/200 DC II Canon 1100Da (Baader IR filter) пост обр. Adobe Photoshop CC 2020 Camera Raw"
             </p>
         </article>
         <article>
-            <img class="image" src="pictures/VenusInPleiades.jpg" alt="se la vi"/>
+            <img class="image" src="/pictures/DM_300_infobox.webp" alt="se la vi"/>
             <p>
                 <b>"Оце мені так пощастило!Венера в Плеядах."</b>
                 "Знято фото було 4 квітня 2020 року в 22-23 годині."

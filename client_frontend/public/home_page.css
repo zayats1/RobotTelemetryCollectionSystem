@@ -1,10 +1,4 @@
 /*theme : https://www.nordtheme.com/*/
-body {
-    font-family: 'Ubuntu', 'Caladea', 'Lucida sans' ,'sans-serif';
-}
-
-
-
 .caption {
     text-align: center;
 }
@@ -15,7 +9,8 @@ body {
     flex-wrap: wrap;
     scroll-behavior: smooth;
     justify-content: flex-start;
-    width: 100%
+    overflow: scroll;
+    width: 100%;
 }
 
 article {
@@ -27,56 +22,55 @@ article {
 }
 
 
-@media (min-width: 440px) {
+
     .image {
-        height: 225pt;
-        width: 325pt;
+        height: 200pt;
+        width: 300pt;
         padding: 5px;
         border-radius: 10pt;
     }
 
     article {
         border-radius: 20pt;
-        width: 450px;
+        width: 350pt;
         height: fit-content;
         padding: 8pt;
         margin: 15pt;
-
     }
 
-}
+
 
 
 @media (min-width: 1080px) {
     .image {
-        height: 300pt;
-        width: 400pt;
+        height: 200pt;
+        width: 300pt;
         padding: 5px;
         border-radius: 10pt;
     }
 
     article {
         border-radius: 20pt;
-        width: 540px;
+        width: 400px;
         height: fit-content;
         padding: 8pt;
         margin: 15pt;
-        flex: 0 16%;
     }
 
 }
 
 @media (min-width: 1750px) {
     .image {
-        height: 300pt;
-        width: 400pt;
+        height: 250pt;
+        width: 450pt;
         padding: 5px;
         border-radius: 10pt;
     }
 
     article {
         border-radius: 20pt;
-        width: 550px;
+        width: 500px;
+        height: fit-content;
         padding: 8pt;
         margin: 15pt;
         flex: 0 26%;

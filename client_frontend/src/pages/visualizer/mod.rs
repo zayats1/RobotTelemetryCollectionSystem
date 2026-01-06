@@ -5,11 +5,11 @@ use charming::{
     WasmRenderer,
 };
 use leptos::prelude::{
-    ClassAttribute, Effect, ElementChild, Get, GetUntracked, NodeRef, NodeRefAttribute,
+    ClassAttribute, Effect, ElementChild, Get, NodeRef, NodeRefAttribute,
     OnAttribute, RwSignal, Update,
 };
 use leptos::{html, island, view, IntoView};
-use std::ops::Div;
+
 
 use leptos::prelude::RenderHtml;
 use leptos_use::use_interval_fn;
