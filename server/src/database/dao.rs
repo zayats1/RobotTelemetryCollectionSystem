@@ -1,5 +1,6 @@
 use libsql::{de, params, Connection, Error, Row};
-use robot_data::robot_info::{BasicInfo, Geodata, MovementInfo, Vec3};
+use robot_data::robot_info::{BasicInfo, BatteryInfo, Geodata, MovementInfo, Vec3};
+use chrono::{DateTime, Utc};
 
 #[allow(async_fn_in_trait)]
 pub trait DAO {
@@ -81,7 +82,7 @@ impl DAO for MovementInfo {
                     y: sql_val_to_f32(&row, 5)?,
                     z: sql_val_to_f32(&row, 6)?,
                 },
-                timestamp: Default::default(),
+                timestamp:sql_val_to_time(&row, 7)?,
             };
 
             data.push(info);
@@ -90,6 +91,7 @@ impl DAO for MovementInfo {
     }
 }
 
+// Todo: tests
 fn sql_val_to_f32(row: &Row, idx: i32) -> Result<f32, Error> {
     row.get_str(idx)?
         .parse::<f32>()
@@ -103,9 +105,11 @@ impl DAO for Geodata{
         conn.execute(
             "INSERT INTO \
              Geodata \
-            VALUES (?,?,?,?, ?,?,?,?)",
+            VALUES (?,?,?)",
             params![
-
+                self.id.clone(),
+                self.coordinates.clone(),
+                self.timestamp.to_string(),
             ],
         )
             .await
@@ -115,7 +119,72 @@ impl DAO for Geodata{
     where
         Self: Sized
     {
-        todo!()
+        let stmt = conn
+            .prepare("SELECT id, robot_type FROM Geodata WHERE id = (?)")
+            .await?;
+        let mut rows = stmt.query([id]).await?;
+        let mut data: Vec<Geodata> = vec![];
+
+        while let Some(row) = rows.next().await? {
+            let info = Geodata {
+                id: row.get(0)?,
+                coordinates: row.get(1)?,
+                timestamp: sql_val_to_time(&row, 3)?,
+            };
+
+            data.push(info);
+        }
+        Ok(data)
     }
 }
 
+// Todo: tests
+fn sql_val_to_time(row: &Row, idx: i32) -> Result<DateTime<Utc>, Error> {
+    let s = row.get_str(idx)?;
+    let dt: DateTime<Utc> =
+        DateTime::parse_from_str(s, "%Y-%m-%d %H:%M:%S%.3f %Z").map_err(|e| libsql::Error::InvalidParserState(e.to_string()))?
+            .with_timezone(&Utc);
+    Ok(dt)
+}
+
+
+
+impl DAO for BatteryInfo{
+    async fn insert_to_db(&self, conn: &Connection) -> libsql::Result<u64> {
+        conn.execute(
+            "INSERT INTO \
+             BatteryInfo \
+            VALUES (?,?,?,?)",
+            params![
+                self.id.clone(),
+                self.capacity,
+                self.health,
+                self.timestamp.to_string()
+            ],
+        )
+            .await
+    }
+
+    async fn get_by_id(id: String, conn: &Connection) -> Result<Vec<Self>, Error>
+    where
+        Self: Sized
+    {
+        let stmt = conn
+            .prepare("SELECT id, robot_type FROM  Movement WHERE id = (?)")
+            .await?;
+        let mut rows = stmt.query([id]).await?;
+        let mut data: Vec<BatteryInfo> = vec![];
+
+        while let Some(row) = rows.next().await? {
+            let info = BatteryInfo {
+                id: row.get(0)?,
+                capacity: sql_val_to_f32(&row,1)?,
+                health: sql_val_to_f32(&row,2)?,
+                timestamp:sql_val_to_time(&row, 3)?,
+            };
+
+            data.push(info);
+        }
+        Ok(data)
+    }
+}

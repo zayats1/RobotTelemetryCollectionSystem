@@ -21,7 +21,7 @@ pub async fn receive_telemetry(data: Json<RobotInfo>) -> Json<String> {
                 info.insert_to_db(&conn).await
             }
 
-            RobotInfo::Location(_) => {
+            RobotInfo::Geodata(_) => {
                 todo!()
             }
             RobotInfo::Battery(_) => {
