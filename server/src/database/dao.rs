@@ -64,7 +64,7 @@ impl DAO for MovementInfo {
         Self: Sized,
     {
         let stmt = conn
-            .prepare("SELECT id, robot_type FROM  Movement WHERE id = (?)")
+            .prepare("SELECT id, speed_x,speed_y,speed_z,acc_x,acc_y,acc_z,timestamp FROM  Movement WHERE id = (?)")
             .await?;
         let mut rows = stmt.query([id]).await?;
         let mut data: Vec<MovementInfo> = vec![];
@@ -120,7 +120,7 @@ impl DAO for Geodata{
         Self: Sized
     {
         let stmt = conn
-            .prepare("SELECT id, robot_type FROM Geodata WHERE id = (?)")
+            .prepare("SELECT id, coordinates,timestamp FROM Geodata WHERE id = (?)")
             .await?;
         let mut rows = stmt.query([id]).await?;
         let mut data: Vec<Geodata> = vec![];
@@ -170,7 +170,7 @@ impl DAO for BatteryInfo{
         Self: Sized
     {
         let stmt = conn
-            .prepare("SELECT id, robot_type FROM  Movement WHERE id = (?)")
+            .prepare("SELECT id, capacity,health,timestamp FROM  Movement WHERE id = (?)")
             .await?;
         let mut rows = stmt.query([id]).await?;
         let mut data: Vec<BatteryInfo> = vec![];
