@@ -1,10 +1,12 @@
 use serde::{Deserialize, Serialize};
-
+use strum::{EnumDiscriminants, IntoStaticStr,EnumString};
 use crate::robot_info::{BasicInfo, BatteryInfo, MovementInfo, Geodata};
 
 pub mod robot_info;
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize,EnumDiscriminants)]
+#[strum_discriminants(name(PubDiscriminants))]
+#[strum_discriminants(derive(EnumString,IntoStaticStr))]
 #[serde(tag = "type")]
 pub enum RobotInfo {
     BasicInfo(BasicInfo),
