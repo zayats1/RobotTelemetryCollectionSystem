@@ -64,16 +64,17 @@ pub fn Visualizer() -> impl IntoView {
     );
 
     view! {
-        <div>
-        <h1>"Welcome to visualizer!"</h1>
-        <div class="visualizer">
-             <p> "Please refresh"</p>
-           <button on:click=move |_| show()>"Show Chart"</button>
-           <button on:click=move |_| hide()>"Hide Chart"</button>
-           <div node_ref=chart_ref/>
-            <button on:click=move |_| pause()>"Pause"</button>
-            <button on:click=move |_| resume()>"Resume"</button>
-        </div>
+           <div class="visualizer">
+               <div class="buttons">
+                   <button on:click=move |_| show()>"Show Chart"</button>
+                   <button on:click=move |_| hide()>"Hide Chart"</button>
+                   <button on:click=move |_| pause()>"Pause"</button>
+                   <button on:click=move |_| resume()>"Resume"</button>
+               </div>
+            <div>
+                <h1>"Welcome to visualizer!"</h1>
+               <div node_ref=chart_ref/>
+             </div>
         </div>
     }
 }

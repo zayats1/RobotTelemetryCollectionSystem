@@ -12,19 +12,19 @@
 body {
   font-family: sans-serif;
   text-align: center;
+  height: 100%;
 }
 
 .container {
   display: flex;
-  flex-direction: column;
+  height: 100%;
+  flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  min-height: 100vh;
 }
 
-.buttons {
-  display: flex;
-  justify-content: space-evenly;
-}
+
 
 h1,
 h2,
@@ -43,18 +43,29 @@ button {
 }
 
 body > picture,
-button {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  margin: 2rem;
-}
+
 
 
 .visualizer{
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  flex-direction: row;
+  justify-content: left;
   align-items: center;
+  height: 100% ;
+}
+
+.buttons {
+  display: flex;
+  flex-flow: column;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  min-height: 90vh;
+  background-color: rgba(47, 46, 54, 0.76);
+}
+
+.buttons.button {
+  display: block;
+  flex-grow: 1;
+  margin-left: auto;
+  text-align: center;
 }
