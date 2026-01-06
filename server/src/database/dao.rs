@@ -1,6 +1,6 @@
-use libsql::{de, params, Connection, Error, Row};
-use robot_data::robot_info::{BasicInfo, BatteryInfo, Geodata, MovementInfo, Vec3};
 use chrono::{DateTime, Utc};
+use libsql::{de, params, Connection, Row};
+use robot_data::robot_info::{BasicInfo, BatteryInfo, Geodata, MovementInfo, Vec3};
 
 #[allow(async_fn_in_trait)]
 pub trait DAO {
@@ -8,6 +8,7 @@ pub trait DAO {
     async fn get_by_id(id: String, conn: &Connection) -> Result<Vec<Self>, libsql::Error>
     where
         Self: Sized;
+    async fn remove_from_db(&self, id: String, conn: &Connection) -> libsql::Result<usize>;
 }
 
 impl DAO for BasicInfo {
@@ -37,6 +38,13 @@ impl DAO for BasicInfo {
         }
         Ok(data)
     }
+
+    async fn remove_from_db(&self, id: String, conn: &Connection) -> libsql::Result<usize> {
+        let stmt = conn
+            .prepare("DELETE FROM BasicInfo WHERE id = (1?)")
+            .await?;
+        stmt.execute([id]).await
+    }
 }
 
 impl DAO for MovementInfo {
@@ -64,7 +72,7 @@ impl DAO for MovementInfo {
         Self: Sized,
     {
         let stmt = conn
-            .prepare("SELECT id, speed_x,speed_y,speed_z,acc_x,acc_y,acc_z,timestamp FROM  Movement WHERE id = (?)")
+            .prepare("SELECT id, speed_x,speed_y,speed_z,acc_x,acc_y,acc_z,timestamp FROM  MovementInfo WHERE id = (?)")
             .await?;
         let mut rows = stmt.query([id]).await?;
         let mut data: Vec<MovementInfo> = vec![];
@@ -89,10 +97,19 @@ impl DAO for MovementInfo {
         }
         Ok(data)
     }
+
+    async fn remove_from_db(&self, id: String, conn: &Connection) -> libsql::Result<usize> {
+        let stmt = conn
+            .prepare("DELETE FROM MovementInfo WHERE id = (1?)")
+            .await?;
+        stmt.execute([id]).await
+
+    }
 }
 
+
 // Todo: tests
-fn sql_val_to_f32(row: &Row, idx: i32) -> Result<f32, Error> {
+fn sql_val_to_f32(row: &Row, idx: i32) -> Result<f32, libsql::Error> {
     row.get_str(idx)?
         .parse::<f32>()
         .map_err(|e| libsql::Error::InvalidParserState(e.to_string()))
@@ -115,7 +132,7 @@ impl DAO for Geodata{
             .await
     }
 
-    async fn get_by_id(id: String, conn: &Connection) -> Result<Vec<Self>, Error>
+    async fn get_by_id(id: String, conn: &Connection) -> Result<Vec<Self>, libsql::Error>
     where
         Self: Sized
     {
@@ -136,10 +153,17 @@ impl DAO for Geodata{
         }
         Ok(data)
     }
+
+    async fn remove_from_db(&self, id: String, conn: &Connection) -> libsql::Result<usize> {
+        let stmt = conn
+            .prepare("DELETE FROM Geodata WHERE id = (1?)")
+            .await?;
+        stmt.execute([id]).await
+    }
 }
 
 // Todo: tests
-fn sql_val_to_time(row: &Row, idx: i32) -> Result<DateTime<Utc>, Error> {
+fn sql_val_to_time(row: &Row, idx: i32) -> Result<DateTime<Utc>, libsql::Error> {
     let s = row.get_str(idx)?;
     let dt: DateTime<Utc> =
         DateTime::parse_from_str(s, "%Y-%m-%d %H:%M:%S%.3f %Z").map_err(|e| libsql::Error::InvalidParserState(e.to_string()))?
@@ -166,12 +190,12 @@ impl DAO for BatteryInfo{
             .await
     }
 
-    async fn get_by_id(id: String, conn: &Connection) -> Result<Vec<Self>, Error>
+    async fn get_by_id(id: String, conn: &Connection) -> Result<Vec<Self>, libsql::Error>
     where
         Self: Sized
     {
         let stmt = conn
-            .prepare("SELECT id, capacity,health,timestamp FROM  Movement WHERE id = (?)")
+            .prepare("SELECT id, capacity,health,timestamp FROM  BatteryInfo WHERE id = (?)")
             .await?;
         let mut rows = stmt.query([id]).await?;
         let mut data: Vec<BatteryInfo> = vec![];
@@ -184,9 +208,15 @@ impl DAO for BatteryInfo{
                 health: sql_val_to_f32(&row,3)?,
                 timestamp:sql_val_to_time(&row, 4)?,
             };
-
             data.push(info);
         }
         Ok(data)
+    }
+
+    async fn remove_from_db(&self, id: String, conn: &Connection) -> libsql::Result<usize> {
+        let stmt = conn
+            .prepare("DELETE FROM BatteryInfo WHERE id = (1?)")
+            .await?;
+        stmt.execute([id]).await
     }
 }
