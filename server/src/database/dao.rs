@@ -1,5 +1,5 @@
 use libsql::{de, params, Connection, Error, Row};
-use robot_data::robot_info::{BasicInfo, MovementInfo, Vec3};
+use robot_data::robot_info::{BasicInfo, Geodata, MovementInfo, Vec3};
 
 #[allow(async_fn_in_trait)]
 pub trait DAO {
@@ -95,3 +95,27 @@ fn sql_val_to_f32(row: &Row, idx: i32) -> Result<f32, Error> {
         .parse::<f32>()
         .map_err(|e| libsql::Error::InvalidParserState(e.to_string()))
 }
+
+
+
+impl DAO for Geodata{
+    async fn insert_to_db(&self, conn: &Connection) -> libsql::Result<u64> {
+        conn.execute(
+            "INSERT INTO \
+             Geodata \
+            VALUES (?,?,?,?, ?,?,?,?)",
+            params![
+
+            ],
+        )
+            .await
+    }
+
+    async fn get_by_id(id: String, conn: &Connection) -> Result<Vec<Self>, Error>
+    where
+        Self: Sized
+    {
+        todo!()
+    }
+}
+

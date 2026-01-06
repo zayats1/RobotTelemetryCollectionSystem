@@ -1,15 +1,14 @@
 use serde::{Deserialize, Serialize};
 
-use crate::robot_info::{BasicInfo, BatteryInfo, MovementInfo, RobotLocation};
+use crate::robot_info::{BasicInfo, BatteryInfo, MovementInfo, Geodata};
 
-mod geodata;
 pub mod robot_info;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum RobotInfo {
     BasicInfo(BasicInfo),
-    Location(RobotLocation),
+    Geodata(Geodata),
     Battery(BatteryInfo),
     Movement(MovementInfo),
 }
@@ -26,7 +25,7 @@ mod tests {
         let telemetry =  r#"
             {
                   "type": "BasicInfo",
-                  "id": 6969424242,
+                  "id": "6969424242",
                   "robot_type": "Mobile"
             }
         "#;
