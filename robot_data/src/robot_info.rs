@@ -36,6 +36,7 @@ pub struct BatteryInfo {
     pub id: String,
     pub capacity: f32,
     pub health: f32,
+    pub timestamp: DateTime<Utc>,
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
