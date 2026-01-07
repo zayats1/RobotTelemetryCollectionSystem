@@ -1,16 +1,15 @@
+use axum::extract::State;
 use axum::Json;
 use libsql::Builder;
 use robot_data::RobotInfo;
 use server::database::dao::DAO;
 use tracing::{debug, info};
+use crate::AppState;
 
-pub async fn receive_telemetry(data: Json<RobotInfo>) -> Json<String> {
+pub async fn receive_telemetry(State(state):State<AppState>, data: Json<RobotInfo>) -> Json<String> {
     let _ = format!("Received data: {:?}", data.clone());
     let res = async {
-        let db = Builder::new_local("server/RobotTelemetry.db")
-            .build()
-            .await?;
-        let conn = db.connect()?;
+        let conn = state.db.connect()?;
         match data.0 {
             RobotInfo::BasicInfo(info) => {
                 debug!("Received BasicInfo: {:?}", info);

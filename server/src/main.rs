@@ -1,20 +1,32 @@
 mod receiver;
 
-
+use std::sync::Arc;
 use axum::{
     routing::get,
     Router,
 };
 use axum::routing::post;
+use libsql::{Database};
 use crate::receiver::receive_telemetry;
 use tracing::{info};
 use tracing_subscriber;
+
+
+#[derive(Debug,Clone)]
+struct AppState{
+    db: Arc<Database>,
+}
 #[tokio::main]
 async fn main()  -> Result<(), std::io::Error> {
-    // build our application with a single route
     tracing_subscriber::fmt::init();
+
+    let db = libsql::Builder::new_local("server/RobotTelemetry.db")
+        .build()
+        .await.expect("Failed to initialize database");
     let app = Router::new().route("/", get(|| async { "telemetry collector" }))
-        .route("/telemetry",post(|data| receive_telemetry(data)));
+        .route("/telemetry",post(receive_telemetry)).with_state(AppState{db:Arc::new(db)});
+
+
 
 
     // run our app with hyper, listening globally on port 3000
