@@ -11,6 +11,7 @@ use crate::receiver::receive_telemetry;
 use tracing::{info};
 use tracing_subscriber;
 use server::AppState;
+use server::sender::send_telemetry;
 
 #[tokio::main]
 async fn main()  -> Result<(), std::io::Error> {
@@ -20,10 +21,9 @@ async fn main()  -> Result<(), std::io::Error> {
         .build()
         .await.expect("Failed to initialize database");
     let app = Router::new().route("/", get(|| async { "telemetry collector" }))
-        .route("/telemetry",post(receive_telemetry)).with_state(AppState{db:Arc::new(db)});
-
-
-
+        .route("/telemetry",post(receive_telemetry))
+        .route("/info/", get(send_telemetry))
+        .with_state(AppState{db:Arc::new(db)});
 
     // run our app with hyper, listening globally on port 3000
 

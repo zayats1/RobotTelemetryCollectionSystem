@@ -1,49 +1,48 @@
-use axum::extract::{Path, State};
+use axum::extract::{Path, Query, State};
 use crate::database::dao::DAO;
 use axum::Json;
-use libsql::Builder;
+
+use serde::Deserialize;
 use robot_data::robot_info::Geodata;
 use robot_data::robot_info::{BasicInfo, BatteryInfo, MovementInfo};
 use robot_data::{RobotInfo, RobotInfoType};
 use crate::AppState;
+use crate::database::fetch::FetchRobotInfo;
+
+#[derive(Deserialize)]
+pub struct TelemetryQuery {
+    id: String,
+    info_type: String,
+}
 
 pub async fn send_telemetry(
     State(state):State<AppState>,
-    Path((id, info_type)): Path<(String, String)>,
+    Query(params): Query<TelemetryQuery>,
 ) -> Json<Result<Vec<RobotInfo>, String>> {
-    let res = async {
-        let conn = state.db
-            .connect()
-            .map_err(|e| format!("Failed to build database connection: {:?}", e))?;
-        match RobotInfoType::try_from(info_type.as_str()) {
-            Ok(RobotInfoType::BasicInfo) => Ok(BasicInfo::get_by_id(id, &conn)
-                .await
-                .map_err(|e| format!("Failed to get basic info: {:?}", e))?
-                .iter()
-                .map(|i| RobotInfo::BasicInfo(i.clone()))
-                .collect::<Vec<RobotInfo>>()),
-            Ok(RobotInfoType::Geodata) => Ok(Geodata::get_by_id(id, &conn)
-                .await
-                .map_err(|e| format!("Failed to get geodata info: {:?}", e))?
-                .iter()
-                .map(|i| RobotInfo::Geodata(i.clone()))
-                .collect::<Vec<RobotInfo>>()),
-            Ok(RobotInfoType::Battery) => Ok(BatteryInfo::get_by_id(id, &conn)
-                .await
-                .map_err(|e| format!("Failed to get battery info: {:?}", e))?
-                .iter()
-                .map(|i| RobotInfo::Battery(i.clone()))
-                .collect::<Vec<RobotInfo>>()),
-            Ok(RobotInfoType::Movement) => Ok(MovementInfo::get_by_id(id, &conn)
-                .await
-                .map_err(|e| format!("Failed to get movement info: {:?}", e))?
-                .iter()
-                .map(|i| RobotInfo::Movement(i.clone()))
-                .collect::<Vec<RobotInfo>>()),
-            Err(e) => Err(e.to_string()),
-        }
+
+   let res =  async {
+       let conn = state.db
+           .connect()?;
+       let id = params.id;
+       let info_type = RobotInfoType::try_from(params.info_type.as_str()).map_err(|e| libsql::Error::InvalidParserState(e.to_string()))?;
+       let packed =match info_type{
+           RobotInfoType::BasicInfo => BasicInfo::fetch(id, &conn).await,
+           RobotInfoType::Geodata => Geodata::fetch(id, &conn).await,
+           RobotInfoType::Battery => BatteryInfo::fetch(id, &conn).await,
+           RobotInfoType::Movement => MovementInfo::fetch(id, &conn).await,
+       };
+      packed
+   };
+    match res.await {
+        Ok(robot_info) => {Json(Ok(robot_info)) }
+        Err(e) => {Json(Err(e.to_string()))}
     }
-    .await;
-    Json(res)
 }
 
+
+fn pack<T, F>(items: Vec<T>, f: F) -> Vec<RobotInfo>
+where
+    F: Fn(T) -> RobotInfo,
+{
+    items.into_iter().map(f).collect()
+}
