@@ -1,19 +1,18 @@
+use axum::extract::{Path, State};
 use crate::database::dao::DAO;
 use axum::Json;
 use libsql::Builder;
 use robot_data::robot_info::Geodata;
 use robot_data::robot_info::{BasicInfo, BatteryInfo, MovementInfo};
 use robot_data::{RobotInfo, RobotInfoType};
+use crate::AppState;
 
 pub async fn send_telemetry(
-    Json((info_type, id)): Json<(String, String)>,
+    State(state):State<AppState>,
+    Path((id, info_type)): Path<(String, String)>,
 ) -> Json<Result<Vec<RobotInfo>, String>> {
     let res = async {
-        let db = Builder::new_local("server/RobotTelemetry.db")
-            .build()
-            .await
-            .map_err(|e| format!("Failed to build database connection: {:?}", e))?;
-        let conn = db
+        let conn = state.db
             .connect()
             .map_err(|e| format!("Failed to build database connection: {:?}", e))?;
         match RobotInfoType::try_from(info_type.as_str()) {
@@ -47,3 +46,4 @@ pub async fn send_telemetry(
     .await;
     Json(res)
 }
+

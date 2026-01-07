@@ -6,16 +6,12 @@ use axum::{
     Router,
 };
 use axum::routing::post;
-use libsql::{Database};
+
 use crate::receiver::receive_telemetry;
 use tracing::{info};
 use tracing_subscriber;
+use server::AppState;
 
-
-#[derive(Debug,Clone)]
-struct AppState{
-    db: Arc<Database>,
-}
 #[tokio::main]
 async fn main()  -> Result<(), std::io::Error> {
     tracing_subscriber::fmt::init();

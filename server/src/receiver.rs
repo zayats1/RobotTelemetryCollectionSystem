@@ -1,10 +1,10 @@
 use axum::extract::State;
 use axum::Json;
-use libsql::Builder;
 use robot_data::RobotInfo;
 use server::database::dao::DAO;
 use tracing::{debug, info};
-use crate::AppState;
+use server::AppState;
+
 
 pub async fn receive_telemetry(State(state):State<AppState>, data: Json<RobotInfo>) -> Json<String> {
     let _ = format!("Received data: {:?}", data.clone());
