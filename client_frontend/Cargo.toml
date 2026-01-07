@@ -14,6 +14,8 @@ log = "0.4"
 console_error_panic_hook = "0.1"
 charming = { version = "0.6.0", features = ["wasm"] }
 leptos-use = "0.17"
+robot_data = {path = "../robot_data"}
+reqwest = { version = "0.13", features = ["json"] }
 # utils
 # strum = { version = "0.25", features = ["derive", "strum_macros"] }
 # strum_macros = "0.25"

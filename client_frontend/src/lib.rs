@@ -7,6 +7,7 @@ use crate::pages::about::AboutPage;
 // Modules
 mod components;
 mod pages;
+mod app_model;
 
 // Top-Level pages
 use crate::pages::home::{HomePage};
