@@ -3,11 +3,10 @@ use libsql::{de, params, Connection, Row};
 use robot_data::robot_info::{BasicInfo, BatteryInfo, Geodata, MovementInfo, Vec3};
 
 #[allow(async_fn_in_trait)]
-pub trait DAO {
+pub trait DAO: Sized {
     async fn insert_to_db(&self, conn: &Connection) -> libsql::Result<u64>;
-    async fn get_by_id(id: String, conn: &Connection) -> Result<Vec<Self>, libsql::Error>
-    where
-        Self: Sized;
+    async fn get_by_id(id: String, conn: &Connection) -> Result<Vec<Self>, libsql::Error>;
+
     async fn remove_from_db(&self, id: String, conn: &Connection) -> libsql::Result<usize>;
 }
 
@@ -90,7 +89,7 @@ impl DAO for MovementInfo {
                     y: sql_val_to_f32(&row, 5)?,
                     z: sql_val_to_f32(&row, 6)?,
                 },
-                timestamp:sql_val_to_time(&row, 7)?,
+                timestamp: sql_val_to_time(&row, 7)?,
             };
 
             data.push(info);
@@ -103,10 +102,8 @@ impl DAO for MovementInfo {
             .prepare("DELETE FROM MovementInfo WHERE id = (1?)")
             .await?;
         stmt.execute([id]).await
-
     }
 }
-
 
 // Todo: tests
 fn sql_val_to_f32(row: &Row, idx: i32) -> Result<f32, libsql::Error> {
@@ -115,9 +112,7 @@ fn sql_val_to_f32(row: &Row, idx: i32) -> Result<f32, libsql::Error> {
         .map_err(|e| libsql::Error::InvalidParserState(e.to_string()))
 }
 
-
-
-impl DAO for Geodata{
+impl DAO for Geodata {
     async fn insert_to_db(&self, conn: &Connection) -> libsql::Result<u64> {
         conn.execute(
             "INSERT INTO \
@@ -129,12 +124,12 @@ impl DAO for Geodata{
                 self.timestamp.to_string(),
             ],
         )
-            .await
+        .await
     }
 
     async fn get_by_id(id: String, conn: &Connection) -> Result<Vec<Self>, libsql::Error>
     where
-        Self: Sized
+        Self: Sized,
     {
         let stmt = conn
             .prepare("SELECT id, coordinates,timestamp FROM Geodata WHERE id = (?)")
@@ -155,9 +150,7 @@ impl DAO for Geodata{
     }
 
     async fn remove_from_db(&self, id: String, conn: &Connection) -> libsql::Result<usize> {
-        let stmt = conn
-            .prepare("DELETE FROM Geodata WHERE id = (1?)")
-            .await?;
+        let stmt = conn.prepare("DELETE FROM Geodata WHERE id = (1?)").await?;
         stmt.execute([id]).await
     }
 }
@@ -165,15 +158,13 @@ impl DAO for Geodata{
 // Todo: tests
 fn sql_val_to_time(row: &Row, idx: i32) -> Result<DateTime<Utc>, libsql::Error> {
     let s = row.get_str(idx)?;
-    let dt: DateTime<Utc> =
-        DateTime::parse_from_str(s, "%Y-%m-%d %H:%M:%S%.3f %Z").map_err(|e| libsql::Error::InvalidParserState(e.to_string()))?
-            .with_timezone(&Utc);
+    let dt: DateTime<Utc> = DateTime::parse_from_str(s, "%Y-%m-%d %H:%M:%S%.3f %Z")
+        .map_err(|e| libsql::Error::InvalidParserState(e.to_string()))?
+        .with_timezone(&Utc);
     Ok(dt)
 }
 
-
-
-impl DAO for BatteryInfo{
+impl DAO for BatteryInfo {
     async fn insert_to_db(&self, conn: &Connection) -> libsql::Result<u64> {
         conn.execute(
             "INSERT INTO \
@@ -187,12 +178,12 @@ impl DAO for BatteryInfo{
                 self.timestamp.to_string()
             ],
         )
-            .await
+        .await
     }
 
     async fn get_by_id(id: String, conn: &Connection) -> Result<Vec<Self>, libsql::Error>
     where
-        Self: Sized
+        Self: Sized,
     {
         let stmt = conn
             .prepare("SELECT id, capacity,total_capacity, health,timestamp FROM  BatteryInfo WHERE id = (?)")
@@ -203,10 +194,10 @@ impl DAO for BatteryInfo{
         while let Some(row) = rows.next().await? {
             let info = BatteryInfo {
                 id: row.get(0)?,
-                capacity: sql_val_to_f32(&row,1)?,
-                total_capacity: sql_val_to_f32(&row,2)?,
-                health: sql_val_to_f32(&row,3)?,
-                timestamp:sql_val_to_time(&row, 4)?,
+                capacity: sql_val_to_f32(&row, 1)?,
+                total_capacity: sql_val_to_f32(&row, 2)?,
+                health: sql_val_to_f32(&row, 3)?,
+                timestamp: sql_val_to_time(&row, 4)?,
             };
             data.push(info);
         }
