@@ -14,8 +14,8 @@ pub fn HomePage() -> impl IntoView {
     view! {
         <Stylesheet id="leptos" href="/home_page.css" />
         <button on:click=on_click>"Click Me: " {move || count.get()}</button>
-         <TestGallery/>
         <section id="gallery">
+          <TestGallery/> // for test
         </section>
     }
 }
