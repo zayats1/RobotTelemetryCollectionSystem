@@ -1,5 +1,4 @@
-use axum::extract::{Path, Query, State};
-use crate::database::dao::DAO;
+use axum::extract::{ Query, State};
 use axum::Json;
 
 use serde::Deserialize;
@@ -40,9 +39,3 @@ pub async fn send_telemetry(
 }
 
 
-fn pack<T, F>(items: Vec<T>, f: F) -> Vec<RobotInfo>
-where
-    F: Fn(T) -> RobotInfo,
-{
-    items.into_iter().map(f).collect()
-}
