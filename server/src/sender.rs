@@ -1,3 +1,4 @@
+use crate::database::dao::GetAll;
 use axum::extract::{ Query, State};
 use axum::Json;
 
@@ -14,7 +15,7 @@ pub struct TelemetryQuery {
     info_type: String,
 }
 
-pub async fn send_telemetry(
+pub async fn get_telemetry_for_id(
     State(state):State<AppState>,
     Query(params): Query<TelemetryQuery>,
 ) -> Json<Result<Vec<RobotInfo>, String>> {
@@ -23,6 +24,9 @@ pub async fn send_telemetry(
        let conn = state.db
            .connect()?;
        let id = params.id;
+
+
+
        let info_type = RobotInfoType::try_from(params.info_type.as_str()).map_err(|e| libsql::Error::InvalidParserState(e.to_string()))?;
        let packed =match info_type{
            RobotInfoType::BasicInfo => BasicInfo::fetch(id, &conn).await,
@@ -37,5 +41,17 @@ pub async fn send_telemetry(
         Err(e) => {Json(Err(e.to_string()))}
     }
 }
+
+pub async fn get_robots(State(state):State<AppState>,) -> Json<Result<Vec<BasicInfo>, String>> {
+    let res =  async {
+        let conn = state.db.connect()?;
+        BasicInfo::get_all(&conn).await
+    };
+    match res.await {
+        Ok(robot_info) => {Json(Ok(robot_info)) }
+        Err(e) => {Json(Err(e.to_string()))}
+    }
+}
+
 
 

@@ -2,6 +2,7 @@ use chrono::{DateTime, Utc};
 use libsql::{de, params, Connection, Row};
 use robot_data::robot_info::{BasicInfo, BatteryInfo, Geodata, MovementInfo, Vec3};
 
+// A set of methods for accessing data from db into RoboInfo structs
 #[allow(async_fn_in_trait)]
 pub trait DAO: Sized {
     async fn insert_to_db(&self, conn: &Connection) -> libsql::Result<u64>;
@@ -10,13 +11,21 @@ pub trait DAO: Sized {
     async fn remove_from_db(&self, id: String, conn: &Connection) -> libsql::Result<usize>;
 }
 
+#[allow(async_fn_in_trait)]
+pub trait GetAll: Sized {
+    async fn get_all(conn: &Connection) -> Result<Vec<Self>, libsql::Error>;
+
+}
+
+
+
 impl DAO for BasicInfo {
     async fn insert_to_db(&self, conn: &Connection) -> libsql::Result<u64> {
         conn.execute(
             "INSERT INTO  BasicInfo(id,robot_type) VALUES (?, ?)",
             params![self.id.clone(), self.robot_type.to_string()],
         )
-        .await
+            .await
     }
 
     async fn get_by_id(id: String, conn: &Connection) -> Result<Vec<Self>, libsql::Error>
@@ -29,7 +38,7 @@ impl DAO for BasicInfo {
         let mut rows = stmt.query([id]).await?;
         let mut data: Vec<BasicInfo> = vec![];
 
-        while let Some(row) = rows.next().await? {
+        while let Some(row) = rows.next().await? {  // todo: compact the code or rewrite it
             data.push(
                 de::from_row::<BasicInfo>(&row)
                     .map_err(|e| libsql::Error::InvalidParserState(e.to_string()))?,
@@ -44,6 +53,26 @@ impl DAO for BasicInfo {
             .await?;
         stmt.execute([id]).await
     }
+}
+    impl GetAll for BasicInfo {
+        async fn get_all(conn: &Connection) -> Result<Vec<Self>, libsql::Error> {
+            let stmt = conn
+                .prepare("SELECT * FROM  BasicInfo")
+                .await?;
+            let mut rows = stmt.query([""]).await?;
+            let mut data: Vec<BasicInfo> = vec![];
+
+            while let Some(row) = rows.next().await? {
+                data.push(
+                    de::from_row::<BasicInfo>(&row)
+                        .map_err(|e| libsql::Error::InvalidParserState(e.to_string()))?,
+                );
+            }
+            Ok(data)
+        }
+
+
+
 }
 
 impl DAO for MovementInfo {
