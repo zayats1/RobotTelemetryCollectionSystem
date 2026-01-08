@@ -1,7 +1,6 @@
 [workspace]
 members = [
     "client_frontend",
-    "fake_robot",
     "robot_data",
     "server",
 ]
