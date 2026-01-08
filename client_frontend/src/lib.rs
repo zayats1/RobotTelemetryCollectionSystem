@@ -25,25 +25,25 @@ pub fn App() -> impl IntoView {
         // id=leptos means cargo-leptos will hot-reload this stylesheet
 
         // sets the document title
-        <Title text="Welcome to Leptos"/>
+        <Title text="Welcome to Leptos" />
         <nav>
-           <p>"Welcome to Leptos!"</p>
-          <a href="/Visualizer/">Visualizer</a>
-          <a href="/HomePage/">HomePage</a>
-          <a href="/About/">About</a>
+            <p>"Welcome to Leptos!"</p>
+            <a href="/Visualizer/">Visualizer</a>
+            <a href="/HomePage/">HomePage</a>
+            <a href="/About/">About</a>
         </nav>
         // content for this welcome page
         <Router>
             <main>
 
                 <Routes fallback=|| "Page not found.".into_view()>
-                    <Route path=StaticSegment("") view=HomePage/>
-                    <Route path=StaticSegment("HomePage") view=HomePage/>
-                    <Route path=StaticSegment("About") view=AboutPage/>
-                    <Route path=StaticSegment("Visualizer") view=Visualizer/>
+                    <Route path=StaticSegment("") view=HomePage />
+                    <Route path=StaticSegment("HomePage") view=HomePage />
+                    <Route path=StaticSegment("About") view=AboutPage />
+                    <Route path=StaticSegment("Visualizer") view=Visualizer />
                 </Routes>
             </main>
         </Router>
-        <footer> "2026"</footer>
+        <footer>"2026"</footer>
     }
 }

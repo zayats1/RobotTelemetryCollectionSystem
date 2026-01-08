@@ -7,8 +7,8 @@ pub fn AboutPage() -> impl IntoView {
     view! {
         <div class="about">
             <h1>"About"</h1>
-            <p> "Robot telemetry collection system"</p>
-            <p> "Version: 0.1"</p>
+            <p>"Robot telemetry collection system"</p>
+            <p>"Version: 0.1"</p>
         </div>
     }
 }
