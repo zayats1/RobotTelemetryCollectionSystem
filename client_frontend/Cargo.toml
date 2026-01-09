@@ -1,3 +1,4 @@
+cargo-features = ["codegen-backend"]
 [package]
 name = "client_frontend"
 version = "0.1.0"
@@ -26,12 +27,19 @@ wasm-bindgen = "0.2"
 wasm-bindgen-test = "0.3"
 web-sys = { version = "0.3", features = ["Document", "Window"] }
 
+# This line needs to come before anything else in Cargo.toml
+
+
+
+
 [profile.dev]
 opt-level = 1
 lto = true
 codegen-units = 8
 
+codegen-backend = "cranelift"
 panic = "abort"
+
 [profile.release]
 opt-level = 'z'
 lto = true
