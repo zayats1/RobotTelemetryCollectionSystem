@@ -1,44 +1,43 @@
-use reqwest::Client;
 use robot_data::{RobotInfo, RobotInfoType};
-use std::sync::Arc;
 use robot_data::robot_info::BasicInfo;
 
-struct AppModel {
-    client: Arc<reqwest::Client>,
+#[derive(Clone, PartialEq)]
+pub(crate) struct AppModel {
+    data : Option<Vec<BasicInfo>>,
 }
 
 impl AppModel {
     pub fn new() -> Self {
         Self {
-            client: Arc::new(Client::new()),
+            data: None
         }
     }
+}
 
+    // Todo: get rid of  hardcoded urls
 pub async fn fetch_robots(
-    &self,
 ) -> Result<Vec<BasicInfo>, String> {
     // Todo: Url
-    let info = self
-        .client
+        let client = reqwest::Client::new();
+    let info = client
         .get(
             "127.0.0.1:3000/robots/"
         )
         .send()
         .await
         .map_err(|err| err.to_string())?;
-    info.json::<Vec<BasicInfo>>()
+    info.json::<Result<Vec<BasicInfo>, String>>()
         .await
-        .map_err(|err| err.to_string())
+        .map_err(|err|format!("failed  to  fetch robots:{}" ,err))?
 }
     pub async fn fetch_info(
-        &self,
         id: String,
         info_type: RobotInfoType,
     ) -> Result<Vec<RobotInfo>, String> {
         // Todo: Url
+        let client = reqwest::Client::new();
         let info_type: &str = info_type.into();
-        let info = self
-            .client
+        let info = client
             .get(format!(
                 "127.0.0.1:3000/info_from/?id={}&info_type={}",
                 id, info_type
@@ -46,8 +45,8 @@ pub async fn fetch_robots(
             .send()
             .await
             .map_err(|err| err.to_string())?;
-        info.json::<Vec<RobotInfo>>()
+        info.json::<Result<Vec<RobotInfo>, String>>()
             .await
-            .map_err(|err| err.to_string())
+            .map_err(|err|format!("failed  to  fetch info:{}" ,err))?
     }
-}
+
