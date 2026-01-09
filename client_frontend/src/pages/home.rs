@@ -41,10 +41,12 @@ pub fn HomePage() -> impl IntoView {
                                         children=move |x| {
                                             view! {
                                                 <article>
-                                                    <p>
-                                                        <b>{x.id}</b>
+                                                    <img class="image" src="/pictures/DM_300_infobox.webp" alt="se la vi" />
+                                                    <p> <b>"id: "</b>
+                                                        {x.id}
                                                     </p>
-                                                    <p>{x.robot_type.to_string()}</p>
+                                                    <p> <b>"type: "</b>
+                                            {x.robot_type.to_string()}</p>
                                                 </article>
                                             }
                                         }
