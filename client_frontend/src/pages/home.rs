@@ -1,11 +1,13 @@
-use std::sync::Arc;
-use leptos::{component, view, IntoView};
-use leptos::prelude::{GlobalAttributes, OnAttribute, RwSignal, Write};
-use leptos_meta::Stylesheet;
+use crate::app_model::{AppModel, fetch_robots};
+use leptos::either::Either;
 use leptos::prelude::*;
+use leptos::prelude::{GlobalAttributes, OnAttribute, RwSignal, Write};
 use leptos::svg::view;
 use leptos::tachys::view;
-use crate::app_model::{fetch_robots, AppModel};
+use leptos::{IntoView, component, view};
+use leptos_meta::Stylesheet;
+use robot_data::robot_info::BasicInfo;
+use std::sync::Arc;
 
 use crate::pages::test_gallery::TestGallery;
 
@@ -15,27 +17,55 @@ pub fn HomePage() -> impl IntoView {
     // Creates a reactive value to update the button
     let count = RwSignal::new(0);
 
-
     let on_click = move |_| *count.write() += 1;
 
     let model = use_context::<RwSignal<AppModel>>().expect("no model?");
-    let robots = LocalResource::new(  || {
-       fetch_robots()});
+    let robots = LocalResource::new(|| fetch_robots());
+
     view! {
         <Stylesheet id="leptos" href="/home_page.scss" />
         <button on:click=on_click>"Click Me: " {move || count.get()}</button>
         <section id="gallery">
-   <Suspense fallback=|| view! { <p>"Loading..."</p> }>
-    {move || {
-        robots
-            .read().iter()
-            .map(|res| {
-               format!("{:?}",*res)
-            }).collect_view()
-    }}
-</Suspense>
-         // <TestGallery/> // for test
+            <Suspense fallback=|| {
+                view! { <p>"Loading..."</p> }
+            }>
+                {move || Suspend::new(async move {
+                    match robots.await {
+                        Ok(data) => {
+                            Either::Left({
+                                let data: Vec<BasicInfo> = data.clone();
+                                view! {
+                                    <For
+                                        each=move || data.clone()
+                                        key=|x| x.id.clone()
+                                        children=move |x| {
+                                            view! {
+                                                <article>
+                                                    <p>
+                                                        <b>{x.id}</b>
+                                                    </p>
+                                                    <p>{x.robot_type.to_string()}</p>
+                                                </article>
+                                            }
+                                        }
+                                    />
+                                }
+                            })
+                        }
+                        Err(e) => {
+                            Either::Right(
+                                view! {
+                                    <article>
+                                        <p>{format!("Error: {e}")}</p>
+                                    </article>
+                                },
+                            )
+                        }
+                    }
+                })}
+
+            </Suspense>
+        // <TestGallery/> // for test
         </section>
     }
 }
-
