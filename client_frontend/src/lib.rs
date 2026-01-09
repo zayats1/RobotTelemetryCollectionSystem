@@ -1,6 +1,6 @@
 use leptos::prelude::*;
 use leptos_meta::*;
-use leptos_router::{components::*, path, StaticSegment};
+use leptos_router::{components::*,  StaticSegment};
 use pages::visualizer::Visualizer;
 use crate::app_model::AppModel;
 use crate::pages::about::AboutPage;
@@ -22,6 +22,8 @@ pub fn App() -> impl IntoView {
     provide_meta_context();
     let model  = RwSignal::new(AppModel::new());
     provide_context(model);
+    let _ = console_log::init_with_level(log::Level::Debug);
+    console_error_panic_hook::set_once();
     view! {
         // injects a stylesheet into the document <head>
         // id=leptos means cargo-leptos will hot-reload this stylesheet

@@ -22,7 +22,7 @@ pub fn HomePage() -> impl IntoView {
     let robots = LocalResource::new(  || {
        fetch_robots()});
     view! {
-        <Stylesheet id="leptos" href="/home_page.css" />
+        <Stylesheet id="leptos" href="/home_page.scss" />
         <button on:click=on_click>"Click Me: " {move || count.get()}</button>
         <section id="gallery">
    <Suspense fallback=|| view! { <p>"Loading..."</p> }>
