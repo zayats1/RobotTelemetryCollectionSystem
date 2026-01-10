@@ -48,6 +48,6 @@ pub fn App() -> impl IntoView {
                 </Routes>
             </main>
         </Router>
-        <footer>"2026"</footer>
+        <footer> <p> "2026"</p> </footer>
     }
 }

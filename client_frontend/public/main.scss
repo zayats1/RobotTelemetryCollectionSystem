@@ -1,7 +1,9 @@
 body {
-	display: flow;
+	display: grid;
 	font-family: sans-serif;
 	text-align: center;
+	grid-template-rows:auto 1fr auto;
+	grid-template-columns:100%;
 	background: linear-gradient( rgb(45, 121, 132), #1D393C) round;
 	background-attachment: local, scroll;
 	min-height: 100vh;
@@ -42,6 +44,9 @@ nav a:hover {
 }
 
 footer{
-	margin-top: auto;
+	background-color: rgba(50, 46, 54, 0.66);
 	align-self: end;
+	padding-bottom: 8pt;
+	padding-top: 2pt;
+	text-align: center;
 }
