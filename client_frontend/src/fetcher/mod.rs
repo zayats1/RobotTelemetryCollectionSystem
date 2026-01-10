@@ -3,18 +3,6 @@ use leptos::serde_json;
 use robot_data::{RobotInfo, RobotInfoType};
 use robot_data::robot_info::BasicInfo;
 
-#[derive(Clone, PartialEq)]
-pub(crate) struct AppModel {
-    data : Option<Vec<BasicInfo>>,
-}
-
-impl AppModel {
-    pub fn new() -> Self {
-        Self {
-            data: None
-        }
-    }
-}
 
     // Todo: get rid of  hardcoded urls
 pub async fn fetch_robots(

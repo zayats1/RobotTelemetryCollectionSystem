@@ -9,18 +9,19 @@ use leptos::prelude::{
     OnAttribute, RwSignal, Update,
 };
 use leptos::{html, island, view, IntoView};
-
-
+use leptos::context::use_context;
+use leptos::either::Either;
 use leptos::prelude::RenderHtml;
 use leptos_use::use_interval_fn;
 use leptos_use::utils::Pausable;
+use crate::state::AppState;
 
 #[island]
 pub fn Visualizer() -> impl IntoView {
     let data = RwSignal::new(vec![150, 230, 224, 218, 135, 147, 260]);
 
     let chart_ref: NodeRef<html::Div> = NodeRef::new();
-
+    let state = use_context::<RwSignal<AppState>>().expect("no state?");
 
     let show = move || {
         if let Some(div) = chart_ref.get() {
@@ -72,8 +73,31 @@ pub fn Visualizer() -> impl IntoView {
                 <button on:click=move |_| resume()>"Resume"</button>
             </div>
             <div>
+
                 <h1>"Welcome to visualizer!"</h1>
                 <div node_ref=chart_ref />
+                <article>
+                    {match state.get().selected_info {
+                        Some(info) => {
+                            Either::Left(
+                                view! {
+                                    <h2>
+                                    "Selected robot:"
+                                    </h2>
+                                    <p>
+                                        <b>"id:"</b>
+                                        {info.id}
+                                    </p>
+                                    <p>
+                                        <b>"type:"</b>
+                                        {info.robot_type.to_string()}
+                                    </p>
+                                },
+                            )
+                        }
+                        None => Either::Right(view! { <p>Nothing selected</p> }),
+                    }}
+                </article>
             </div>
         </div>
     }

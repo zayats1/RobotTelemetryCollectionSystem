@@ -16,11 +16,11 @@ pub fn AboutPage() -> impl IntoView {
         <div class="about">
             <p>"Robot telemetry collection system"</p>
             <p>"Version: 0.1"</p>
-         <button on:click=on_click class="hamster-tap">
-         <p> "Tap on the hamster: "</p>
-            <img src= "/pictures/hamster.png" width="42pt" height="42pt"  alt="se la vi"/>
-        </button>
-           <p> "Bucks: " { move || count.get()} "$" </p>
+            <button on:click=on_click class="hamster-tap">
+                <p>"Tap on the hamster: "</p>
+                <img src="/pictures/hamster.png" width="42pt" height="42pt" alt="se la vi" />
+            </button>
+            <p>"Bucks: " {move || count.get()} "$"</p>
         </div>
     }
 }

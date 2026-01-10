@@ -2,16 +2,17 @@ use leptos::prelude::*;
 use leptos_meta::*;
 use leptos_router::{components::*,  StaticSegment};
 use pages::visualizer::Visualizer;
-use crate::app_model::AppModel;
 use crate::pages::about::AboutPage;
 
 // Modules
 mod components;
 mod pages;
-pub mod app_model;
+pub mod fetcher;
+pub mod state;
 
 // Top-Level pages
 use crate::pages::home::{HomePage};
+use crate::state::AppState;
 
 /// An app router which renders the homepage and handles 404's
 
@@ -20,8 +21,7 @@ use crate::pages::home::{HomePage};
 pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
-    let model  = RwSignal::new(AppModel::new());
-    provide_context(model);
+    provide_context(RwSignal::new(AppState::new(None)));
     let _ = console_log::init_with_level(log::Level::Debug);
     console_error_panic_hook::set_once();
     view! {
