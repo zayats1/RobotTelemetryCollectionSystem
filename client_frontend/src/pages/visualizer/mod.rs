@@ -68,9 +68,7 @@ pub fn Visualizer() -> impl IntoView {
                         Some(info) => {
                             Either::Left(
                                 view! {
-                                    <h2>
-                                    "Selected robot:"
-                                    </h2>
+                                    <h2>"Selected robot:"</h2>
                                     <p>
                                         <b>"id:"</b>
                                         {info.id}

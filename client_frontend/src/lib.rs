@@ -21,7 +21,7 @@ use crate::state::AppState;
 pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
-    provide_context(RwSignal::new(AppState::new(None)));
+    provide_context(RwSignal::new(AppState::default()));
     let _ = console_log::init_with_level(log::Level::Debug);
     console_error_panic_hook::set_once();
     view! {
@@ -48,6 +48,6 @@ pub fn App() -> impl IntoView {
                 </Routes>
             </main>
         </Router>
-        <footer> <p> "2026"</p> </footer>
+        <footer>"2026"</footer>
     }
 }
