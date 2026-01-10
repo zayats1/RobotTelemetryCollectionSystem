@@ -18,7 +18,7 @@ pub fn HomePage() -> impl IntoView {
 
     let state = use_context::<RwSignal<AppState>>().expect("no state?");
     let robots = LocalResource::new(|| fetch_robots());
-
+    let basic_info: RwSignal<Vec<BasicInfo>> = RwSignal::new(vec![]);
     let select_info = move |val| {  *state.write() = AppState::new(
         Some(val)
     )};
@@ -31,11 +31,10 @@ pub fn HomePage() -> impl IntoView {
                     match robots.await {
                         Ok(data) => {
                             Either::Left({
-                                let data: Vec<BasicInfo> = data.clone();
-
+                              *basic_info.write() = data;
                                 view! {
                                     <For
-                                        each=move || data.clone()
+                                        each=move || basic_info.get()
                                         key=|x| x.id.clone()
 
                                         children=move |x| {
