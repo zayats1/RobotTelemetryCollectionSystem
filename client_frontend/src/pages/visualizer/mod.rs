@@ -12,8 +12,6 @@ use leptos::{html, island, view, IntoView};
 use leptos::context::use_context;
 use leptos::either::Either;
 use leptos::prelude::RenderHtml;
-use leptos_use::use_interval_fn;
-use leptos_use::utils::Pausable;
 use crate::state::AppState;
 
 #[island]
@@ -53,24 +51,12 @@ pub fn Visualizer() -> impl IntoView {
         }
     };
 
-    let Pausable {
-        pause,
-        resume,
-        is_active: _,
-    } = use_interval_fn(
-        move || {
-            data.update(|d| d.rotate_right(1));
-        },
-        1000,
-    );
 
     view! {
         <div class="visualizer">
             <div class="buttons">
                 <button on:click=move |_| show_chart()>"Show Chart"</button>
                 <button on:click=move |_| hide_chart()>"Hide Chart"</button>
-                <button on:click=move |_| pause()>"Pause"</button>
-                <button on:click=move |_| resume()>"Resume"</button>
             </div>
             <div>
 
