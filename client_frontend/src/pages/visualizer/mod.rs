@@ -23,7 +23,7 @@ pub fn Visualizer() -> impl IntoView {
     let chart_ref: NodeRef<html::Div> = NodeRef::new();
     let state = use_context::<RwSignal<AppState>>().expect("no state?");
 
-    let show = move || {
+    let show_chart = move || {
         if let Some(div) = chart_ref.get() {
             div.set_inner_html(""); // optional cleanup
             div.set_inner_html(r#"<span id="chart"></span>"#);
@@ -47,7 +47,7 @@ pub fn Visualizer() -> impl IntoView {
         }
     };
 
-    let hide = move || {
+    let hide_chart = move || {
         if let Some(div) = chart_ref.get() {
             div.set_inner_html(""); // optional cleanup
         }
@@ -67,8 +67,8 @@ pub fn Visualizer() -> impl IntoView {
     view! {
         <div class="visualizer">
             <div class="buttons">
-                <button on:click=move |_| show()>"Show Chart"</button>
-                <button on:click=move |_| hide()>"Hide Chart"</button>
+                <button on:click=move |_| show_chart()>"Show Chart"</button>
+                <button on:click=move |_| hide_chart()>"Hide Chart"</button>
                 <button on:click=move |_| pause()>"Pause"</button>
                 <button on:click=move |_| resume()>"Resume"</button>
             </div>
