@@ -25,6 +25,7 @@ pub fn Visualizer() -> impl IntoView {
         if let Some(div) = chart_ref.get() {
             div.set_inner_html(""); // optional cleanup
             div.set_inner_html(r#"<span id="chart"></span>"#);
+            // The code should run  on client side only.
             Effect::new(move |_| {
                 let local = data.get();
 
