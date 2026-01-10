@@ -1,3 +1,4 @@
+
 [workspace]
 members = [
     "client_frontend",
@@ -11,9 +12,11 @@ lto = true
 codegen-units = 8
 panic = "abort"
 
+
 [profile.wasm-release]
 opt-level = "z"
 lto = true
 codegen-units = 8
 panic = "abort"
 inherits = "release"
+
