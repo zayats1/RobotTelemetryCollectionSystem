@@ -4,6 +4,7 @@ use charming::{
     Chart,
     WasmRenderer,
 };
+use charming::theme::Theme;
 use leptos::prelude::{
     ClassAttribute, Effect, ElementChild, Get, NodeRef, NodeRefAttribute,
     OnAttribute, RwSignal,
@@ -24,7 +25,7 @@ pub fn Visualizer() -> impl IntoView {
     let show_chart = move || {
         if let Some(div) = chart_ref.get() {
             div.set_inner_html(""); // optional cleanup
-            div.set_inner_html(r#"<span id="chart"></span>"#);
+            div.set_inner_html(r#"<div n class="chart" id="chart"></div>"#);
             // The code should run  on client side only.
             Effect::new(move |_| {
                 let local = data.get();
@@ -39,7 +40,7 @@ pub fn Visualizer() -> impl IntoView {
                     .y_axis(Axis::new().type_(AxisType::Value))
                     .series(Line::new().data(local));
 
-                let renderer = WasmRenderer::new(600, 400);
+                let renderer = WasmRenderer::new(600, 400).theme(Theme::Dark);
                 renderer.render("chart", &chart).unwrap();
             });
 
