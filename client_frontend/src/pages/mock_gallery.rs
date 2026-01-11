@@ -1,7 +1,7 @@
 use leptos::prelude::*;
 use leptos::{component, view, IntoView};
 #[component]
-pub fn TestGallery() -> impl IntoView {
+pub fn MockGallery() -> impl IntoView {
     view! {
         <article>
             <img class="image" src="/pictures/DM_300_infobox.webp" alt="se la vi" />

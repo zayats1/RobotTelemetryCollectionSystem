@@ -88,7 +88,7 @@ pub fn HomePage() -> impl IntoView {
                 })}
 
             </Suspense>
-        // <TestGallery/> // for test
+        // <MockGallery/> // for test
         </section>
     }
 }
