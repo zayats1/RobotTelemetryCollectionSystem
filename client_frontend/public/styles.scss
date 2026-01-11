@@ -51,9 +51,8 @@ body > picture,
 .buttons {
   display: flex;
   flex-flow: column;
-  flex-wrap: wrap;
   justify-content: space-evenly;
-  min-height: 90vh;
+  height: 100%;
   background-color: rgba(47, 46, 54, 0.76);
 }
 
@@ -65,5 +64,6 @@ body > picture,
 
 .chart{
   flex-grow: 1;
+  padding-left: 1pt;
   margin-left: auto;
 }
