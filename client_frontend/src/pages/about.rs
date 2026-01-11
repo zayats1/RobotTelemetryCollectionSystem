@@ -1,6 +1,4 @@
 use leptos::{component, view, IntoView};
-use leptos::attr::{alt, src};
-use leptos::html::img;
 use leptos::prelude::*;
 
 

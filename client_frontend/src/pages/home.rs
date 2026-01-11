@@ -3,8 +3,6 @@ use leptos::either::Either;
 use leptos::prelude::*;
 use leptos::prelude::{GlobalAttributes, OnAttribute, RwSignal, Write};
 use leptos::{IntoView, component, view};
-use leptos::attr::id;
-use leptos::logging::error;
 use robot_data::robot_info::BasicInfo;
 use log::debug;
 use crate::state::AppState;

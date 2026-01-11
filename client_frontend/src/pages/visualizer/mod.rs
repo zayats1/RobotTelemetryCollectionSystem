@@ -6,7 +6,7 @@ use charming::{
 };
 use leptos::prelude::{
     ClassAttribute, Effect, ElementChild, Get, NodeRef, NodeRefAttribute,
-    OnAttribute, RwSignal, Update,
+    OnAttribute, RwSignal,
 };
 use leptos::{html, island, view, IntoView};
 use leptos::context::use_context;
