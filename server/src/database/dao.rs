@@ -1,4 +1,4 @@
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, NaiveDateTime, NaiveTime, Utc};
 use libsql::{de, params, Connection, Row};
 use robot_data::robot_info::{BasicInfo, BatteryInfo, Geodata, MovementInfo, Vec3};
 
@@ -187,9 +187,11 @@ impl DAO for Geodata {
 // Todo: tests
 fn sql_val_to_time(row: &Row, idx: i32) -> Result<DateTime<Utc>, libsql::Error> {
     let s = row.get_str(idx)?;
-    let dt: DateTime<Utc> = DateTime::parse_from_str(s, "%Y-%m-%d %H:%M:%S%.3f %Z")
-        .map_err(|e| libsql::Error::InvalidParserState(e.to_string()))?
-        .with_timezone(&Utc);
+    let now_utc = Utc::now();
+    let naive = NaiveDateTime::parse_from_str(s, "%Y-%m-%d %H:%M:%S%.3f %Z")
+        .map_err(|e| libsql::Error::InvalidParserState(e.to_string()))?;
+    let dt: DateTime<Utc> = DateTime::<Utc>::from_naive_utc_and_offset(naive, *now_utc.offset());
+
     Ok(dt)
 }
 
