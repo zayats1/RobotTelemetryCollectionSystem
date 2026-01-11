@@ -1,8 +1,10 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
+// Todo : gate that behind feature flag
+use tabled::Tabled;
 
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Tabled)]
 pub enum RobotType {
     RoboHand,
     #[default]
@@ -31,7 +33,7 @@ impl TryFrom<&str> for RobotType {
     }
 }
 
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Tabled)]
 pub struct BatteryInfo {
     pub id: String,
     pub capacity: f32,
@@ -40,13 +42,13 @@ pub struct BatteryInfo {
     pub timestamp: DateTime<Utc>,
 }
 
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Tabled)]
 pub struct BasicInfo {
     pub id:  String,
     // pub battery_info: Option<BatteryInfo>,
     pub robot_type: RobotType,
 }
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Tabled)]
 pub struct MovementInfo {
     pub id:  String,
     pub speed: Vec3,  // m/s
@@ -55,16 +57,22 @@ pub struct MovementInfo {
 }
 
 pub type GPS = String; // TODO use actual GPS
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Tabled)]
 pub struct Geodata {
     pub id:  String,
     pub coordinates: GPS,
     pub timestamp: DateTime<Utc>
 }
 
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, PartialOrd)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, PartialOrd,   Tabled)]
 pub struct Vec3 {
     pub x: f32,
     pub y: f32,
     pub z: f32,
+}
+
+impl Display for Vec3 {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "(x:{}, y:{}, z:{})", self.x, self.y, self.z)
+    }
 }

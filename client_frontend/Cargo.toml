@@ -18,6 +18,11 @@ leptos-use = "0.17"
 robot_data = {path = "../robot_data"}
 reqwest = { version = "0.13", features = ["json"] }
 reactive_stores = "0.3.1"
+tabled = "0.20.0"
+
+
+
+
 # utils
 # strum = { version = "0.25", features = ["derive", "strum_macros"] }
 # strum_macros = "0.25"

@@ -15,15 +15,15 @@ pub fn HomePage() -> impl IntoView {
     let basic_info:RwSignal<Vec<BasicInfo>> = RwSignal::new(vec![]);
 
 
-
     let select_info = move |val:BasicInfo| {
         debug!("selected robot:{:?}", &val);
         let id = val.id.clone();
-
-        *state.write() = AppState::new(
-            Some(val),
-            Some(id)
-        );
+       let prev_state = state.get().clone();
+       *state.write() = AppState {
+           selected_info:Some(val.clone()),
+           selected_id:Some(id.clone()),
+           ..prev_state
+       }
 
 };
     view! {
@@ -60,7 +60,7 @@ pub fn HomePage() -> impl IntoView {
 
                                                     <p>
                                                         <b>"id: "</b>
-                                                        {x.id}
+                                                       move || {x.id}
                                                     </p>
                                                     <p>
                                                         <b>"type: "</b>

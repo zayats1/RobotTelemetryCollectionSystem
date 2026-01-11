@@ -1,8 +1,10 @@
 use leptos::logging::log;
-use leptos::serde_json;
+use leptos::server_fn::serde::de::DeserializeOwned;
+use leptos::server_fn::serde::Deserialize;
 use robot_data::{RobotInfo, RobotInfoType};
-use robot_data::robot_info::BasicInfo;
+use robot_data::robot_info::{BasicInfo, BatteryInfo, Geodata, MovementInfo};
 
+pub type FetchRes<T> = Result<Vec<T>, String>;
 
     // Todo: get rid of  hardcoded urls
 pub async fn fetch_robots(
@@ -19,23 +21,35 @@ pub async fn fetch_robots(
             .await
             .map_err(|e| format!("failed to parse telemetry: {e}"))?
 }
-    pub async fn fetch_info(
-        id: &str,
+    async fn fetch_info<T: DeserializeOwned+ Sized>(
+        id: String,
         info_type: RobotInfoType,
-    ) -> Result<Vec<RobotInfo>, String> {
+    ) -> FetchRes<T> {
         // Todo: Url
         let info_type: &str = info_type.into();
         let info =
             reqwest::get(format!(
                 "http://127.0.0.1:3000/info_from/?id={}&info_type={}",
-                id, info_type
+                &id, info_type
             ))
             .await
                 .map_err(|err| format!("failed to get telemetry: {}",err))?;
         log!("{:?}", info);
         info
-            .json::<Result<Vec<RobotInfo>, String>>()
+            .json::<Result<Vec<T>, String>>()
             .await
             .map_err(|e| format!("failed to parse telemetry: {e}"))?
     }
 
+pub async  fn fetch_battery_info(id: String) -> FetchRes<BatteryInfo> {
+    fetch_info::<BatteryInfo>(id, RobotInfoType::Battery).await
+}
+pub async  fn fetch_movement_info(id: String) -> FetchRes<MovementInfo> {
+    fetch_info::<MovementInfo>(id, RobotInfoType::Movement).await
+}
+
+// Todo
+//
+// pub async  fn fetch_location_info(id: String) -> FetchRes<Geodata> {
+//     fetch_info::<Geodata>(id, RobotInfoType::Geodata).await
+// }
