@@ -1,0 +1,27 @@
+meta {
+  name: battery_info
+  type: http
+  seq: 6
+}
+
+post {
+  url: 127.0.0.1:3000/telemetry
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "type": "Battery",
+    "id": "960ad1d8-ad8a-45d7-b536-d1c37f30a213",
+    "health": 0.5,
+    "capacity": 2000.0,
+    "total_capacity": 20000.0
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
