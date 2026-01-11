@@ -14,11 +14,13 @@ pub async fn fetch_robots(
         .await
         .map_err(|err| format!("failed to get info about robots: {}",err))?;
         log!("{:?}", info);
-        serde_json::from_str::<Result<Vec<BasicInfo>,String>>(&info.text().await.map_err(|err| err.to_string())?)
-            .map_err(|err| format!("failed to parse info about robots: {}",err))?
+        info
+            .json::<Result<Vec<BasicInfo>, String>>()
+            .await
+            .map_err(|e| format!("failed to parse telemetry: {e}"))?
 }
     pub async fn fetch_info(
-        id: String,
+        id: &str,
         info_type: RobotInfoType,
     ) -> Result<Vec<RobotInfo>, String> {
         // Todo: Url
@@ -31,7 +33,9 @@ pub async fn fetch_robots(
             .await
                 .map_err(|err| format!("failed to get telemetry: {}",err))?;
         log!("{:?}", info);
-        serde_json::from_str::<Result<Vec<RobotInfo>,String>>(&info.text().await.map_err(|err| err.to_string())?)
-            .map_err(|err| format!("failed to parse telemetry: {}",err))?
+        info
+            .json::<Result<Vec<RobotInfo>, String>>()
+            .await
+            .map_err(|e| format!("failed to parse telemetry: {e}"))?
     }
 
