@@ -1,7 +1,6 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
-use strum::ToString;
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub enum RobotType {
