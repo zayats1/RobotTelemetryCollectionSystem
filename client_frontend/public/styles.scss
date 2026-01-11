@@ -23,7 +23,6 @@ body {
 }
 
 
-
 h1,
 h2,
 h3,
@@ -41,15 +40,12 @@ button {
 }
 
 body > picture,
-
-
-
-.visualizer{
+.visualizer {
   display: flex;
   flex-direction: row;
   justify-content: left;
   align-items: center;
-  height: 100% ;
+  height: 100%;
 }
 
 .buttons {
