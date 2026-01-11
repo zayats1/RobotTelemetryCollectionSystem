@@ -2,4 +2,4 @@ pub mod home;
 pub mod not_found;
 pub mod about;
 pub mod visualizer;
-mod mock_gallery;
+pub mod mock_gallery;
