@@ -8,7 +8,7 @@ use charming::{
 use charming::theme::Theme;
 use leptos::prelude::{ClassAttribute, Effect, ElementChild, Get, LocalResource, NodeRef, NodeRefAttribute, OnAttribute, Resource, RwSignal, Suspend, Suspense, Write};
 use leptos::{html, island, view, IntoView};
-use leptos::context::use_context;
+use leptos::context::{provide_context, use_context};
 use leptos::either::Either;
 use leptos::prelude::RenderHtml;
 
@@ -24,11 +24,14 @@ pub fn Visualizer() -> impl IntoView {
     let state = use_context::<RwSignal<AppState>>().expect("no state?");
 
 
-    let battery_info_fetcher: LocalResource<FetchRes<BatteryInfo>> = LocalResource::new(move || {
+    let battery_info_fetcher: LocalResource<FetchRes<BatteryInfo>> = LocalResource::new(
+          move  || {
           let the_id = state.get().selected_id.unwrap_or_default();
            fetch_battery_info(the_id)
+    }
+    );
 
-    });
+    provide_context(battery_info_fetcher);
      // Todo: only for battery info for now
     let show_chart = move || {
         if let Some(div) = chart_ref.get() {
@@ -79,7 +82,7 @@ pub fn Visualizer() -> impl IntoView {
                 <button on:click=move |_| hide_chart()>"Hide Chart"</button>
             </div>
             <div>
-                    <article>
+                <article>
                     {match state.get().selected_info {
                         Some(info) => {
                             Either::Left(
@@ -129,7 +132,6 @@ pub fn Visualizer() -> impl IntoView {
                     })}
                 </Suspense>
                 <div node_ref=chart_ref />
-
 
                 <label for="info_type">Choose which info do you want to visualise:</label>
 
