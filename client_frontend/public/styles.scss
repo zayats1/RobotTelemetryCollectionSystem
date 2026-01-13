@@ -69,6 +69,7 @@ body > picture,
 }
 
 .info_table{
+  padding: 20pt;
   overflow-block: scroll;
   overflow-y: auto;
   overflow-x: auto;
@@ -77,5 +78,7 @@ body > picture,
   overflow-wrap: anywhere;
 }
 .info_table pre {
+  padding: 2pt;
+  background-color: rgba(47, 46, 54, 0.76);
   white-space: pre;    /* prevents line wrapping */
 }

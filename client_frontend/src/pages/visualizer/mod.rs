@@ -1,4 +1,3 @@
-use charming::series::Bar;
 use charming::{
     component::{Axis, Title}, element::AxisType,
     series::Line,
@@ -75,7 +74,7 @@ pub fn Visualizer() -> impl IntoView {
     view! {
         <div class="visualizer">
             <div class="buttons">
-                <h2>"Welcome to visualizer!"</h2>
+                <b>"Welcome to visualizer!"</b>
                 <button on:click=move |_| show_chart()>"Show Chart"</button>
                 <button on:click=move |_| hide_chart()>"Hide Chart"</button>
             </div>
