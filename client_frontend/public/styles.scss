@@ -67,3 +67,15 @@ body > picture,
   padding-left: 1pt;
   margin-left: auto;
 }
+
+.info_table{
+  overflow-block: scroll;
+  overflow-y: auto;
+  overflow-x: auto;
+  width:fit-content;
+  height: 400pt;
+  overflow-wrap: anywhere;
+}
+.info_table pre {
+  white-space: pre;    /* prevents line wrapping */
+}

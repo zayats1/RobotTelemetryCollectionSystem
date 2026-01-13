@@ -60,7 +60,8 @@ pub fn HomePage() -> impl IntoView {
 
                                                     <p>
                                                         <b>"id: "</b>
-                                                       move || {x.id}
+                                                        move ||
+                                                        {x.id}
                                                     </p>
                                                     <p>
                                                         <b>"type: "</b>

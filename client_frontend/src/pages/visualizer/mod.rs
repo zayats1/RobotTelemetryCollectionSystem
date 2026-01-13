@@ -75,37 +75,12 @@ pub fn Visualizer() -> impl IntoView {
     view! {
         <div class="visualizer">
             <div class="buttons">
+                <h2>"Welcome to visualizer!"</h2>
                 <button on:click=move |_| show_chart()>"Show Chart"</button>
                 <button on:click=move |_| hide_chart()>"Hide Chart"</button>
             </div>
             <div>
-
-                <h1>"Welcome to visualizer!"</h1>
-
-        <Suspense
-        fallback=move || view! { <p>"Loading..."</p> }>
-           move || { Suspend::new (async move   {
-             let res = battery_info_fetcher.await;
-                 match res {
-                Ok(inf) => {
-                     *data.write() = inf;
-                    Either::Left (view!{
-                        let mut table = Table::new(&inf);
-                        table.with(Style::psql());
-                    })
-                },
-                 Err(e) => {
-                    Either::Right (view!{
-                        <p>{ format!("Error: {}", e) }</p>
-                    })
-                }
-            }
-          }
-        )
-            }
-        </Suspense>
-        <div node_ref=chart_ref />
-                <article>
+                    <article>
                     {match state.get().selected_info {
                         Some(info) => {
                             Either::Left(
@@ -126,13 +101,44 @@ pub fn Visualizer() -> impl IntoView {
                     }}
                 </article>
 
+                <Suspense fallback=move || {
+                    view! { <p>"Loading..."</p> }
+                }>
+                    {Suspend::new(async move {
+                        let res = battery_info_fetcher.await;
+                        match res {
+                            Ok(inf) => {
+                                let mut table = tabled::Table::new(&inf);
+                                table.with(tabled::settings::Style::psql());
+                                *data.write() = inf.clone();
+                                Either::Left(
+
+                                    view! {
+                                        <div class="info_table">
+                                            <pre>{table.to_string()}</pre>
+                                        </div>
+                                    },
+                                )
+                            }
+                            Err(e) => {
+                                Either::Right(
+
+                                    view! { <p>{format!("Error: {}", e)}</p> },
+                                )
+                            }
+                        }
+                    })}
+                </Suspense>
+                <div node_ref=chart_ref />
+
+
                 <label for="info_type">Choose which info do you want to visualise:</label>
 
                 <select id="cars">
-                  <option value="volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="opel">Opel</option>
-                  <option value="audi">Audi</option>
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="opel">Opel</option>
+                    <option value="audi">Audi</option>
                 </select>
 
             </div>
