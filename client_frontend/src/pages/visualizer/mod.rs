@@ -78,11 +78,9 @@ pub fn Visualizer() -> impl IntoView {
         <div class="visualizer">
             <div class="buttons">
                 <b>"Welcome to visualizer!"</b>
-                <button on:click=move |_| show_chart()>"Show Chart"</button>
-                <button on:click=move |_| hide_chart()>"Hide Chart"</button>
-            </div>
-            <div>
-                <article>
+
+
+        <article>
                     {match state.get().selected_info {
                         Some(info) => {
                             Either::Left(
@@ -95,13 +93,19 @@ pub fn Visualizer() -> impl IntoView {
                                     <p>
                                         <b>"type:"</b>
                                         {info.robot_type.to_string()}
+
                                     </p>
+                                     <button on:click=move |_| show_chart()>"Show Chart"</button>
+                                    <button on:click=move |_| hide_chart()>"Hide Chart"</button>
                                 },
                             )
                         }
                         None => Either::Right(view! { <p>Nothing selected</p> }),
                     }}
                 </article>
+            </div>
+
+            <div >
 
                 <Suspense fallback=move || {
                     view! { <p>"Loading..."</p> }
@@ -131,17 +135,7 @@ pub fn Visualizer() -> impl IntoView {
                         }
                     })}
                 </Suspense>
-                <div node_ref=chart_ref />
-
-                <label for="info_type">Choose which info do you want to visualise:</label>
-
-                <select id="cars">
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="opel">Opel</option>
-                    <option value="audi">Audi</option>
-                </select>
-
+                 <div node_ref=chart_ref />
             </div>
         </div>
     }
