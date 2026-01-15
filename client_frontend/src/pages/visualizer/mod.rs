@@ -6,7 +6,7 @@ use charming::{
 };
 
 use charming::theme::Theme;
-use leptos::prelude::{ClassAttribute, Effect, ElementChild, Get, LocalResource, NodeRef, NodeRefAttribute, OnAttribute, Resource, RwSignal, Suspend, Suspense, Write};
+use leptos::prelude::{ClassAttribute, Effect, ElementChild, Get, LocalResource, NodeRef, NodeRefAttribute, OnAttribute, RwSignal, Suspend, Suspense, Write};
 use leptos::{html, island, view, IntoView};
 use leptos::context::{provide_context, use_context};
 use leptos::either::Either;

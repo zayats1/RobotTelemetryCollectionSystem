@@ -1,4 +1,3 @@
-use std::sync::Arc;
 use robot_data::robot_info::BasicInfo;
 use robot_data::RobotInfoType;
 

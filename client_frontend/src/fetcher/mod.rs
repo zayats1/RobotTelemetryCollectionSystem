@@ -1,8 +1,7 @@
 use leptos::logging::log;
 use leptos::server_fn::serde::de::DeserializeOwned;
-use leptos::server_fn::serde::Deserialize;
-use robot_data::{RobotInfo, RobotInfoType};
-use robot_data::robot_info::{BasicInfo, BatteryInfo, Geodata, MovementInfo};
+use robot_data::RobotInfoType;
+use robot_data::robot_info::{BasicInfo, BatteryInfo, MovementInfo};
 
 pub type FetchRes<T> = Result<Vec<T>, String>;
 

@@ -19,6 +19,7 @@ robot_data = {path = "../robot_data"}
 reqwest = { version = "0.13", features = ["json"] }
 reactive_stores = "0.3.1"
 tabled = "0.20.0"
+dotenvy = "0.15.7"
 
 
 
