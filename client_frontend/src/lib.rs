@@ -9,6 +9,7 @@ mod components;
 mod pages;
 pub mod fetcher;
 pub mod state;
+mod env;
 
 // Top-Level pages
 use crate::pages::home::{HomePage};

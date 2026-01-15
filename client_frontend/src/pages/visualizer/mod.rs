@@ -65,7 +65,7 @@ pub fn Visualizer() -> impl IntoView {
                 renderer.render("chart", &chart).unwrap();
             });
         }
-    };;
+    };
 
     let hide_chart = move || {
         if let Some(div) = chart_ref.get() {
