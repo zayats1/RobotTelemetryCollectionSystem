@@ -1,4 +1,4 @@
-use libsql::{Connection, Database, Error};
+use libsql::Connection;
 use robot_data::robot_info::{BasicInfo, BatteryInfo, Geodata, MovementInfo};
 use robot_data::RobotInfo;
 use crate::database::dao::DAO;
