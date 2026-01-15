@@ -30,9 +30,9 @@ pub fn App() -> impl IntoView {
         // id=leptos means cargo-leptos will hot-reload this stylesheet
 
         // sets the document title
-        <Title text="Welcome to Leptos" />
+        <Title text="Sauron Robot Telemetry Collection system" />
         <nav>
-            <p>"Welcome to Leptos!"</p>
+            <p>"Robot Telemetry Collector"</p>
             <a href="/Visualizer/">Visualizer</a>
             <a href="/HomePage/">HomePage</a>
             <a href="/About/">About</a>
