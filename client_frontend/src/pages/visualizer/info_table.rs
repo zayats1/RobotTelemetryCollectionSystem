@@ -5,24 +5,24 @@ use csv::WriterBuilder;
 use wasm_bindgen::JsCast;
 use web_sys::{HtmlAnchorElement, Url, Blob, BlobPropertyBag};
 
-// 1. Your CSV Export Logic
+
 pub fn export_to_csv<T: Serialize>(data: &[T]) -> Result<String, Box<dyn std::error::Error>> {
-    let mut wtr = WriterBuilder::new()
+    let mut writer = WriterBuilder::new()
         .delimiter(b',')
         .has_headers(true)
         .from_writer(vec![]);
 
     for item in data {
-        wtr.serialize(item)?;
+        writer.serialize(item)?;
     }
 
-    let inner = wtr.into_inner()?;
+    let inner = writer.into_inner()?;
     Ok(String::from_utf8(inner)?)
 }
 
-// 2. The Browser Download Trigger
+// The Browser Download Trigger
 fn trigger_download(csv_content: String, filename: &str) {
-    let mut options = BlobPropertyBag::new();
+    let options = BlobPropertyBag::new();
 
     let _ = js_sys::Reflect::set(
         &options,
@@ -44,7 +44,7 @@ fn trigger_download(csv_content: String, filename: &str) {
     }
 }
 
-// 3. The Component
+// Table, that displays telemetry
 #[component]
 pub fn InfoTable<T>(
     #[prop(into)] data: Vec<T>
@@ -71,18 +71,13 @@ where
     view! {
         <div class="info_table_container">
             <div class="table_actions" style="margin-bottom: 0.5rem;">
-                <button
-                    on:click=on_download
-                    class="download_button"
-                >
+                <button on:click=on_download class="download_button">
                     "Download CSV"
                 </button>
             </div>
 
             <div class="info_table" style="overflow-x: auto;">
-                <pre style="font-family: monospace; white-space: pre;">
-                    {table_display()}
-                </pre>
+                <pre style="font-family: monospace; white-space: pre;">{table_display()}</pre>
             </div>
         </div>
     }
