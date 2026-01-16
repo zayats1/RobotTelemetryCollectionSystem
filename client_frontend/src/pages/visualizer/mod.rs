@@ -23,99 +23,72 @@ use crate::state::AppState;
 
 #[island]
 pub fn Visualizer() -> impl IntoView {
-    let data:RwSignal<Vec<BatteryInfo>> = RwSignal::new(Vec::new());
-
-    let chart_ref: NodeRef<html::Div> = NodeRef::new();
     let state = use_context::<RwSignal<AppState>>().expect("no state?");
-    // Controls whether the chart is visible
-    let (show_chart, set_show_chart) = RwSignal::new(false).split();
+    let (show_chart, set_show_chart) = RwSignal::new(true).split(); // Default to true for better UX
+    let battery_data = RwSignal::new(Vec::<BatteryInfo>::new());
 
-    let battery_info_fetcher: LocalResource<FetchRes<BatteryInfo>> = LocalResource::new(
-          move  || {
-          let the_id = state.get().selected_id.unwrap_or_default();
-           fetch_battery_info(the_id)
-    }
-    );
-    provide_context(battery_info_fetcher);
-
+    let battery_info_fetcher = LocalResource::new(move || {
+        let id = state.get().selected_id.unwrap_or_default();
+        fetch_battery_info(id)
+    });
 
     view! {
-        <div class="visualizer">
-            <div class="buttons">
-                <b>"Welcome to visualizer!"</b>
-                <article>
-                    {move || match state.get().selected_info {
-                        Some(info) => {
-                            Either::Left(
-                                view! {
-                                    <h2>"Selected robot:"</h2>
-                                    <p>
-                                        <b>"id: "</b>
-                                        {info.id}
-                                    </p>
-                                    <p>
-                                        <b>"type: "</b>
-                                        {info.robot_type.to_string()}
-                                    </p>
+        <div class="dashboard-container">
+            // SIDEBAR: Robot Info
+            <aside class="sidebar">
+                <header>
+                    <h2>"Robot Status"</h2>
+                    <p class="subtitle">"Telemetry"</p>
+                </header>
 
+                {move || match state.get().selected_info {
+                    Some(info) => view! {
+                        <div class="info-card">
+                            <div class="info-group">
+                                <label>"ID"</label>
+                                <span class="mono">{info.id}</span>
+                            </div>
+                            <div class="info-group">
+                                <label>"TYPE"</label>
+                                <span class="badge">{info.robot_type.to_string()}</span>
+                            </div>
 
-                                    <div class="controls">
-                                        <button on:click=move |_| {
-                                            set_show_chart.set(true)
-                                        }>"Show Chart"</button>
-                                        <button on:click=move |_| {
-                                            set_show_chart.set(false)
-                                        }>"Hide Chart"</button>
-                                    </div>
-                                },
-                            )
-                        }
-                        None => Either::Right(view! { <p>"Nothing selected"</p> }),
-                    }}
-                </article>
-            </div>
+                            <div class="view-controls">
+                                <button
+                                    class:active=move || show_chart.get()
+                                    on:click=move |_| set_show_chart.set(true)>
+                                    "Analytics"
+                                </button>
+                                <button
+                                    class:active=move || !show_chart.get()
+                                    on:click=move |_| set_show_chart.set(false)>
+                                    "Raw Data"
+                                </button>
+                            </div>
+                        </div>
+                    }.into_any(),
+                    None => view! { <p class="empty-state">"No robot selected"</p> }.into_any(),
+                }}
+            </aside>
 
-            <div>
-                <Suspense fallback=move || {
-                    view! { <p>"Loading Data..."</p> }
-                }>
-                    {move || {
-                        let res = battery_info_fetcher.get();
-                        match res {
-                            Some(Ok(info)) => {
-                                let data_for_chart = info.clone();
-                                let data_for_table = info.clone();
+            // MAIN CONTENT
+            <main class="content">
+                <Suspense fallback=|| view! { <div class="loader">"Fetching data..."</div> }>
+                    {move || Suspend::new(async move {
+                        if let Ok(inf) = battery_info_fetcher.await {
+                            battery_data.set(inf.clone());
 
-                                    view! {
-                                        <div class="data-view">
-
-                                            <InfoTable data=data_for_table />
-
-                                              {
-                                                if show_chart.get() {
-                                                    view! {
-                                                        <BatteryChart data=RwSignal::new(
-                                                            data_for_chart
-                                                        ) />
-                                                    }
-                                                        .into_any()
-                                                } else {
-                                                    view! { <div></div> }.into_any()
-                                                }.into_view()
-                                            }
-                                        </div>
-                                    }.into_any()
+                            if show_chart.get() {
+                                view! { <BatteryChart data=battery_data.read_only() /> }.into_any()
+                            } else {
+                                view! { <InfoTable data=inf /> }.into_any()
                             }
-                            Some(Err(e)) => {
-                                    view! {
-                                        <p class="error">{format!("Error fetching data: {}", e)}</p>
-                                    }.into_any()
-                            }
-                            None => view! { <p>"Initializing..."</p> }.into_any(),
+                        } else {
+                            view! { <div class="error">"Failed to load battery metrics"</div> }.into_any()
                         }
-                    }}
+                    })}
                 </Suspense>
-            </div>
+            </main>
         </div>
     }
 }

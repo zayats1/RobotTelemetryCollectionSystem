@@ -4,7 +4,7 @@ body {
   text-align: center;
   grid-template-rows:auto 1fr auto;
   grid-template-columns:100%;
-  background: linear-gradient(rgb(45, 121, 132), #1D393C) round;
+  background: linear-gradient(rgb(29, 86, 91), #152b33) round;
   background-attachment: local, scroll;
   min-height: 100vh;
 
@@ -32,7 +32,7 @@ nav p {
 }
 
 article {
-  background-color: rgba(46, 52, 64, 0.65);
+  background-color: rgba(46, 52, 64, 0.82);
   display: block;
   text-align: justify;
   height: fit-content;
