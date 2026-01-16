@@ -19,9 +19,19 @@ robot_data = {path = "../robot_data"}
 reqwest = { version = "0.13", features = ["json"] }
 reactive_stores = "0.3.1"
 tabled = "0.20.0"
-
+csv = "1.4"
 dotenvy = "0.15.7"
-
+js-sys = "0.3.85"
+web-sys = { version = "0.3", features = [
+    "HtmlAnchorElement",
+    "Url",
+    "Blob",
+    "BlobPropertyBag",
+    "Window",
+    "Document"
+] }
+serde = { version = "1.0.228", features = ["derive"] }
+wasm-bindgen = "0.2"
 
 [build-dependencies]
 dotenvy = "0.15.7"
