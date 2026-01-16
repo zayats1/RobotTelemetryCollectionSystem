@@ -64,6 +64,8 @@ body > picture,
 
 .chart{
   flex-grow: 1;
+  width: 100%;
+  min-height: 400px;
   padding-left: 1pt;
   margin-left: auto;
 }
