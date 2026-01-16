@@ -1,3 +1,3 @@
 // Todo
 
-pub mod select_info;
+pub mod mock_gallery;
