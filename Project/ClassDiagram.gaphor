@@ -154,9 +154,9 @@ controlflow {
 <ref refid="08de20ae-d460-11f0-9fef-7da19e8fc9a6"/>
 <ref refid="b7f334ea-d460-11f0-8298-7da19e8fc9a6"/>
 <ref refid="8377ed6d-d462-11f0-a1e4-7da19e8fc9a6"/>
+<ref refid="b03da3a9-d462-11f0-a623-7da19e8fc9a6"/>
 <ref refid="561555c8-d463-11f0-857d-7da19e8fc9a6"/>
 <ref refid="7db0e6b4-d463-11f0-b83d-7da19e8fc9a6"/>
-<ref refid="b03da3a9-d462-11f0-a623-7da19e8fc9a6"/>
 </reflist>
 </packagedElement>
 </UML:Package>
@@ -2673,7 +2673,7 @@ associating them to their use cases.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 599.189446859248, 327.74834822465897)</val>
 </matrix>
 <points>
-<val>[(497.31055314075195, 61.25165177534103), (497.31055314075195, 254.25165177534103), (67.81055314075195, 254.25165177534103)]</val>
+<val>[(497.31055314075195, 61.25165177534103), (497.31055314075195, 254.25165177534103), (67.81055314075195, 253.75165177534103)]</val>
 </points>
 <head-connection>
 <ref refid="9e057b85-d461-11f0-a112-7da19e8fc9a6"/>
@@ -2704,7 +2704,7 @@ associating them to their use cases.</val>
 </UML:ClassItem>
 <UML:EnumerationItem id="9e08cf99-d461-11f0-9cf6-7da19e8fc9a6">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 342.0, 499.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 342.0, 498.49999999999994)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -2729,6 +2729,9 @@ associating them to their use cases.</val>
 <horizontal>
 <val>False</val>
 </horizontal>
+<orthogonal>
+<val>False</val>
+</orthogonal>
 <subject>
 <ref refid="2a687e16-d2d4-11f0-969d-1b7f3260c949"/>
 </subject>
@@ -2812,6 +2815,9 @@ associating them to their use cases.</val>
 <diagram>
 <ref refid="585f224c-71b6-11ec-a409-f47b099bf663"/>
 </diagram>
+<horizontal>
+<val>False</val>
+</horizontal>
 <orthogonal>
 <val>1</val>
 </orthogonal>
@@ -2854,7 +2860,7 @@ associating them to their use cases.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 589.189446859248, 317.74834822465914)</val>
 </matrix>
 <points>
-<val>[(-480.68944685924805, 54.25165177534086), (-480.68944685924805, 264.25165177534086), (-247.18944685924805, 264.25165177534086)]</val>
+<val>[(-480.68944685924805, 54.25165177534086), (-480.68944685924805, 264.25165177534086), (-247.18944685924805, 263.75165177534086)]</val>
 </points>
 <head-connection>
 <ref refid="9e116c3d-d461-11f0-8b0e-7da19e8fc9a6"/>
@@ -2945,6 +2951,9 @@ associating them to their use cases.</val>
 <horizontal>
 <val>1</val>
 </horizontal>
+<orthogonal>
+<val>False</val>
+</orthogonal>
 <subject>
 <ref refid="43a738ef-d2d4-11f0-86dc-1b7f3260c949"/>
 </subject>
@@ -2968,6 +2977,9 @@ associating them to their use cases.</val>
 <horizontal>
 <val>False</val>
 </horizontal>
+<orthogonal>
+<val>False</val>
+</orthogonal>
 <subject>
 <ref refid="27331b7b-d2d4-11f0-abff-1b7f3260c949"/>
 </subject>
@@ -3007,7 +3019,7 @@ associating them to their use cases.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 609.1894468592482, 337.74834822465897)</val>
 </matrix>
 <points>
-<val>[(-146.43944685924816, 34.25165177534103), (-146.43944685924816, 161.25165177534103)]</val>
+<val>[(-146.43944685924816, 34.25165177534103), (-146.43944685924816, 160.75165177534097)]</val>
 </points>
 <head-connection>
 <ref refid="9e2e74ae-d461-11f0-81ba-7da19e8fc9a6"/>
@@ -3059,7 +3071,7 @@ associating them to their use cases.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 303.0381065846476, 401.2005205032782)</val>
 </matrix>
 <points>
-<val>[(331.2118934153524, -12.200520503278199), (331.2118934153524, 97.7994794967218)]</val>
+<val>[(331.2118934153524, -12.200520503278199), (331.2118934153524, 97.29947949672174)]</val>
 </points>
 <head-connection>
 <ref refid="9e15b157-d461-11f0-9a64-7da19e8fc9a6"/>
@@ -3101,6 +3113,9 @@ associating them to their use cases.</val>
 <horizontal>
 <val>False</val>
 </horizontal>
+<orthogonal>
+<val>False</val>
+</orthogonal>
 <subject>
 <ref refid="31f7cf58-d2d4-11f0-9e4c-1b7f3260c949"/>
 </subject>
@@ -4039,7 +4054,7 @@ associating them to their use cases.</val>
 <ref refid="85862c7a-cf52-11f0-8a1b-a13bbc3f0c51"/>
 </datatype>
 <name>
-<val>type</val>
+<val>+ type(Generated enum)</val>
 </name>
 </UML:Property>
 <UML:DataTypeItem id="b03de73c-d462-11f0-8b52-7da19e8fc9a6">
@@ -4050,7 +4065,7 @@ associating them to their use cases.</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>100.0</val>
+<val>102.0</val>
 </width>
 <height>
 <val>91.0</val>
@@ -4064,7 +4079,7 @@ associating them to their use cases.</val>
 </UML:DataTypeItem>
 <UML:DataType id="b03da3a9-d462-11f0-a623-7da19e8fc9a6">
 <name>
-<val>type Json = String</val>
+<val>type Json =serde:Json</val>
 </name>
 <owningPackage>
 <ref refid="f3a82730-71b1-11ec-a409-f47b099bf663"/>

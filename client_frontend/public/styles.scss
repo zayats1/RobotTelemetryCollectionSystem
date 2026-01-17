@@ -111,7 +111,9 @@ body > picture,
   flex-direction: column;
   align-items: center;
 }
-
+.info_table pre {
+ width:auto;
+}
 
 .info_table pre {
   background: #1e293b;
@@ -119,6 +121,6 @@ body > picture,
   border-radius: 8px;
   border: 1px solid #334155;
   overflow-x: auto;
-  max-width: 800px;
+  max-width: 1800px;
   color: #cbd5e1;
 }
