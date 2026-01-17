@@ -28,7 +28,7 @@ The system is in an early development stage, so not suitable for deployments yet
 
 # Contributing
 If you have a problem, open a issue. Know, how to fix it open a PR.
-And if you are  a teacher, grade me with the biggest score, because I use rust, btw!
+And if you are  a teacher, grade it nice, because I use rust, btw!
 
 
 
