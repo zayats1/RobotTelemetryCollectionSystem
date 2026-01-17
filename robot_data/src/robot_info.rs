@@ -51,8 +51,12 @@ pub struct BasicInfo {
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Tabled)]
 pub struct MovementInfo {
     pub id:  String,
-    pub speed: Vec3,  // m/s
-    pub acc: Vec3,   // m/s^2
+    pub speed_x: f32,  // m/s
+    pub speed_y: f32,
+    pub speed_z: f32,
+    pub acc_x: f32,
+    pub acc_y: f32,
+    pub acc_z: f32, // m/s^2
     pub timestamp: DateTime<Utc>,
 }
 
@@ -62,17 +66,4 @@ pub struct Geodata {
     pub id:  String,
     pub coordinates: GPS,
     pub timestamp: DateTime<Utc>
-}
-
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, PartialOrd,   Tabled)]
-pub struct Vec3 {
-    pub x: f32,
-    pub y: f32,
-    pub z: f32,
-}
-
-impl Display for Vec3 {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "(x:{}, y:{}, z:{})", self.x, self.y, self.z)
-    }
 }

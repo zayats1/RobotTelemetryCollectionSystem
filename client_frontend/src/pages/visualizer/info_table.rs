@@ -2,6 +2,7 @@ use leptos::prelude::*;
 use tabled::Tabled;
 use serde::Serialize;
 use csv::WriterBuilder;
+use leptos::logging::error;
 use wasm_bindgen::JsCast;
 use web_sys::{HtmlAnchorElement, Url, Blob, BlobPropertyBag};
 
@@ -55,8 +56,13 @@ where
     // Clone data specifically for the download closure
     let data_for_download = data.clone();
     let on_download = move |_| {
-        if let Ok(csv_string) = export_to_csv(&data_for_download) {
-            trigger_download(csv_string, "table_export.csv");
+        match export_to_csv(&data_for_download) {
+            Ok(csv_string) => {
+                trigger_download(csv_string, "table_export.csv");
+            }
+            Err(e) => {
+                error!("{:?}",e)
+            }
         }
     };
 

@@ -1,6 +1,6 @@
 use chrono::{DateTime, NaiveDateTime, Utc};
 use libsql::{de, params, Connection, Row};
-use robot_data::robot_info::{BasicInfo, BatteryInfo, Geodata, MovementInfo, Vec3};
+use robot_data::robot_info::{BasicInfo, BatteryInfo, Geodata, MovementInfo};
 
 // A set of methods for accessing data from db into RoboInfo structs
 #[allow(async_fn_in_trait)]
@@ -83,12 +83,12 @@ impl DAO for MovementInfo {
             VALUES (?,?,?,?, ?,?,?,?)",
             params![
                 self.id.clone(),
-                self.speed.x,
-                self.speed.y,
-                self.speed.z,
-                self.acc.x,
-                self.acc.y,
-                self.acc.z,
+                self.speed_x,
+                self.speed_y,
+                self.speed_z,
+                self.acc_x,
+                self.acc_y,
+                self.acc_z,
                 self.timestamp.to_string()
             ],
         )
@@ -108,16 +108,12 @@ impl DAO for MovementInfo {
         while let Some(row) = rows.next().await? {
             let info = MovementInfo {
                 id: row.get(0)?,
-                speed: Vec3 {
-                    x: sql_val_to_f32(&row, 1)?,
-                    y: sql_val_to_f32(&row, 2)?,
-                    z: sql_val_to_f32(&row, 3)?,
-                },
-                acc: Vec3 {
-                    x: sql_val_to_f32(&row, 4)?,
-                    y: sql_val_to_f32(&row, 5)?,
-                    z: sql_val_to_f32(&row, 6)?,
-                },
+                speed_x: sql_val_to_f32(&row, 1)?,
+                speed_y: sql_val_to_f32(&row, 2)?,
+                speed_z: sql_val_to_f32(&row, 3)?,
+                acc_x: sql_val_to_f32(&row, 4)?,
+                acc_y: sql_val_to_f32(&row, 5)?,
+                acc_z: sql_val_to_f32(&row, 6)?, 
                 timestamp: sql_val_to_time(&row, 7)?,
             };
 
