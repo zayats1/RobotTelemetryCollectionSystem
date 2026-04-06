@@ -8,12 +8,12 @@ use robot_data::RobotInfoType;
     pub selected_id :Option<String>,
 }
 
-impl AppState {
-    pub fn new (selected_info:Option<BasicInfo>,selected_id:Option<String>,selected_info_type:Option<RobotInfoType>)-> Self {
-       Self{
-           selected_info,
-           selected_info_type,
-           selected_id
-       }
-    }
-}
+// impl AppState {
+//     pub fn new (selected_info:Option<BasicInfo>,selected_id:Option<String>,selected_info_type:Option<RobotInfoType>)-> Self {
+//        Self{
+//            selected_info,
+//            selected_info_type,
+//            selected_id
+//        }
+//     }
+// }
