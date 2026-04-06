@@ -1,5 +1,3 @@
-mod receiver;
-
 use std::sync::Arc;
 use axum::{
     routing::get,
@@ -30,7 +28,7 @@ async fn main()  -> Result<(), std::io::Error> {
 
 
     info!("The server is starting");
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000").await?;
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:3020").await?;
 
     axum::serve(listener, app).await
 }
