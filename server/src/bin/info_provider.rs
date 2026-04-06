@@ -3,13 +3,11 @@ use axum::{
     routing::get,
     Router,
 };
-use axum::routing::post;
 
-use server::receiver::receive_telemetry;
 use tracing::{info};
 use tracing_subscriber;
 use server::AppState;
-use server::sender::{get_robots, get_telemetry_for_id};
+use server::sender::get_telemetry_for_id;
 
 #[tokio::main]
 async fn main()  -> Result<(), std::io::Error> {
@@ -19,8 +17,6 @@ async fn main()  -> Result<(), std::io::Error> {
         .build()
         .await.expect("Failed to initialize database");
     let app = Router::new().route("/", get(|| async { "telemetry collector" }))
-        .route("/telemetry",post(receive_telemetry))
-        .route("/robots/", get(get_robots))
         .route("/info_from/", get(get_telemetry_for_id))
         .with_state(AppState{db:Arc::new(db)});
 
@@ -28,7 +24,7 @@ async fn main()  -> Result<(), std::io::Error> {
 
 
     info!("The server is starting");
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:3020").await?;
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:3040").await?;
 
     axum::serve(listener, app).await
 }

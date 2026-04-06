@@ -11,7 +11,7 @@ use server::database::dao::DAO;
 use tracing::{info};
 use tracing_subscriber;
 use server::AppState;
-use server::sender::get_telemetry_for_id;
+
 use axum::extract::State;
 use axum::Json;
 
@@ -27,14 +27,13 @@ async fn main()  -> Result<(), std::io::Error> {
         .await.expect("Failed to initialize database");
     let app = Router::new().route("/", get(|| async { "telemetry collector" }))
         .route("/battery_info",post(receive_telemetry))
-        .route("/info_from/", get(get_telemetry_for_id))
         .with_state(AppState{db:Arc::new(db)});
 
     
 
 
     info!("The server is starting");
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:3008").await?;
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:3002").await?;
 
     axum::serve(listener, app).await
 }
