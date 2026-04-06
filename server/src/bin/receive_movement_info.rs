@@ -11,7 +11,7 @@ use server::database::dao::DAO;
 use tracing::{info};
 use tracing_subscriber;
 use server::AppState;
-use server::sender::get_telemetry_for_id;
+
 use axum::extract::State;
 use axum::Json;
 
