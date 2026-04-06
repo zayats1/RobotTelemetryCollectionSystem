@@ -4,22 +4,15 @@ mod select_info;
 mod sidebar;
 mod live_toggle;
 
-use charming::theme::Theme;
-use leptos::context::{provide_context, use_context};
-use leptos::either::Either;
-use leptos::prelude::{create_memo, event_target_checked, on_cleanup, set_interval_with_handle, Memo, RenderHtml, StyleAttribute, With};
-use leptos::prelude::{
-    ClassAttribute, Effect, ElementChild, Get, IntoAny, LocalResource, NodeRef, NodeRefAttribute,
-    OnAttribute, RwSignal, Set, Signal, Suspend, Suspense, Write,
-};
-use leptos::{IntoView, html, island, view};
+use leptos::context::use_context;
+use leptos::prelude::*;
 
-use crate::fetcher::{FetchRes, fetch_battery_info, fetch_movement_info};
+
+use crate::fetcher::{fetch_battery_info, fetch_movement_info};
 use crate::pages::visualizer::battery::BatteryChart;
 use crate::pages::visualizer::info_table::InfoTable;
 use crate::state::AppState;
 use robot_data::RobotInfoType;
-use robot_data::robot_info::BatteryInfo;
 use crate::pages::visualizer::live_toggle::LiveToggle;
 use crate::pages::visualizer::select_info::SelectInfo;
 use crate::pages::visualizer::sidebar::Sidebar;

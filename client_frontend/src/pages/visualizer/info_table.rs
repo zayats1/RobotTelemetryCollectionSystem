@@ -4,7 +4,7 @@ use serde::Serialize;
 use csv::WriterBuilder;
 use leptos::logging::error;
 use wasm_bindgen::JsCast;
-use web_sys::{HtmlAnchorElement, Url, Blob, BlobPropertyBag};
+use web_sys::{Url, Blob, BlobPropertyBag};
 
 
 pub fn export_to_csv<T: Serialize>(data: &[T]) -> Result<String, Box<dyn std::error::Error>> {
