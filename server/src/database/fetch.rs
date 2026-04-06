@@ -4,17 +4,6 @@ use robot_data::RobotInfo;
 use crate::database::dao::DAO;
 
 
-trait Wrap<T> : IntoIterator{
-    fn wrap(&self,fun:fn(T)->RobotInfo) -> Vec<RobotInfo>;
-}
-
-
-impl <T>Wrap<T> for Vec<T> where T:Clone{
-    fn wrap(&self, fun: fn(T) -> RobotInfo) -> Vec<RobotInfo>{
-         self.iter().map(|i: &T| fun(i.clone())).collect::<Vec<RobotInfo>>()
-    }
-}
-
 
 #[allow(async_fn_in_trait)]
 pub trait FetchRobotInfo {

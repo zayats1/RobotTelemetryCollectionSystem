@@ -1,5 +1,3 @@
-mod receiver;
-
 use std::sync::Arc;
 use axum::{
     routing::get,
@@ -7,7 +5,7 @@ use axum::{
 };
 use axum::routing::post;
 
-use crate::receiver::receive_telemetry;
+use server::receiver::receive_telemetry;
 use tracing::{info};
 use tracing_subscriber;
 use server::AppState;

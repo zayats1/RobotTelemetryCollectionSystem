@@ -1,9 +1,9 @@
 use axum::extract::State;
 use axum::Json;
 use robot_data::RobotInfo;
-use server::database::dao::DAO;
+use crate::database::dao::DAO;
 use tracing::{debug};
-use server::AppState;
+use crate::AppState;
 
 
 pub async fn receive_telemetry(State(state):State<AppState>, data: Json<RobotInfo>) -> Json<String> {
