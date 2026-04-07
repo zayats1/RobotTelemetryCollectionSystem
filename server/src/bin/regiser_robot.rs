@@ -25,7 +25,7 @@ async fn main()  -> Result<(), std::io::Error> {
         .build()
         .await.expect("Failed to initialize database");
     let app = Router::new().route("/", get(|| async { "telemetry collector" }))
-        .route("/battery_info",post(receive_telemetry))
+        .route("/basic_info",post(receive_telemetry))
         .with_state(AppState{db:Arc::new(db)});
 
     
