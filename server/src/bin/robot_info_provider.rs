@@ -6,7 +6,7 @@ use axum::{
     Router,
 };
 
-use server::sender::get_telemetry_for_id;
+use server::sender::{get_robots, get_telemetry_for_id};
 use tracing::{info};
 use tracing_subscriber;
 use server::AppState;
@@ -21,6 +21,7 @@ async fn main()  -> Result<(), std::io::Error> {
         .await.expect("Failed to initialize database");
     let app = Router::new().route("/", get(|| async { "telemetry collector" }))
         .route("/info_from/", get(get_telemetry_for_id))
+        .route("/robots/", get(get_robots))
         .with_state(AppState{db:Arc::new(db)});
 
     // run our app with hyper, listening globally on port 3000
