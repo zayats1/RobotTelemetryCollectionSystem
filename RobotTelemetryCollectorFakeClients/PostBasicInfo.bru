@@ -1,0 +1,24 @@
+meta {
+  name: PostBasicInfo
+  type: http
+  seq: 7
+}
+
+post {
+  url: 127.0.0.1:3008/basic_info
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "type": "BasicInfo",
+    "id": "{{$randomUUID}}",
+    "robot_type": "Mobile"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

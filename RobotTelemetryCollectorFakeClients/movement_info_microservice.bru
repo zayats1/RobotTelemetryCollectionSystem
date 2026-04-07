@@ -1,0 +1,30 @@
+meta {
+  name: movement_info_microservice
+  type: http
+  seq: 9
+}
+
+post {
+  url: 127.0.0.1:3018/movement_info
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "type": "Movement",
+    "id": "960ad1d8-ad8a-45d7-b536-d1c37f30a213",
+    "speed_x": {{$randomInt}},
+    "speed_y": {{$randomInt}},
+    "speed_z": {{$randomInt}},
+    "acc_x": {{$randomInt}},
+    "acc_y": {{$randomInt}},
+    "acc_z": {{$randomInt}},
+    "timestamp": "{{$randomDateRecent}}"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
